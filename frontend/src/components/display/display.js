@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from "react-router-dom";
 import styles from './display.module.css';
+import Card from '../card/card';
 
 class Display extends Component {
 
@@ -29,7 +30,6 @@ class Display extends Component {
     }
 
     render() {
-
         const errURL = this.props.symbol + '/error';
         const queryRedirect = <Redirect to={errURL} />;
 
@@ -38,7 +38,9 @@ class Display extends Component {
             {this.state.dataLoaded ? 
                 (this.state.validResponse ? 
                     <div className={styles.displayWrapper}>
-                        <h1>hello world</h1>
+                        <Card />
+                        <Card />
+                        <Card />
                     </div>
                     :
                     queryRedirect) : 
