@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import styles from './display.module.css';
+import NavBar from "../navbar/navbar"
 import Card from '../card/card';
 
 class Display extends Component {
@@ -38,12 +39,14 @@ class Display extends Component {
             <React.Fragment>
             {this.state.dataLoaded ? 
                 (this.state.validResponse ? 
-                    <div className={styles.displayWrapper}>
-                        <h1 className={styles.bold}>{d.name}</h1>
-                        <Card title="Quick Overview" text={"Percent Change: " + d.percentChange + "Net Change: " + d.netChange + "\nPrice: " + d.price}/>
-                        <Card title="Company SEC Description" text={d.about}/>
-                        <Card title="Financial Numbers" data={d.keyStockData}/>
-                    </div>
+                    <React.Fragment>
+                        <NavBar title={d.name}/>
+                        <div className={styles.displayWrapper}>
+                            <Card title="Quick Overview" text={"Percent Change: " + d.percentChange + "Net Change: " + d.netChange + "\nPrice: " + d.price}/>
+                            <Card title="Company SEC Description" text={d.about}/>
+                            <Card title="Financial Numbers" data={d.keyStockData}/>
+                        </div>
+                    </React.Fragment>
                     :
                     queryRedirect) : 
                 <div className={styles.loadingWrapper}>
