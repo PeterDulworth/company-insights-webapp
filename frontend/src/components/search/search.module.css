@@ -27,10 +27,6 @@
   transform-style: preserve-3d;
 }
 
-/* .search:focus { */
-  /* text-align: left; */
-/* } */
-
 .searchForm {
   position: relative;
   width: 60vh;

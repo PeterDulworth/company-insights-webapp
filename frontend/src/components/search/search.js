@@ -6,18 +6,29 @@ class Search extends Component {
 
     searchBar;
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            companyData: null
+        };
+    }
+
+    async fetchCompanyData(url) {
+        const response = await fetch(url);
+        const json = await response.json();
+        console.log(JSON.stringify(json));
+        if (json.status === 404) {
+            alert("Invalid ticker.\n Please try again!")
+        }
+        this.setState({ companyData: json });
+    }
+
     handleSubmit = (event) => {
         event.preventDefault();
         var text = this.searchBar.value;
         if (text !== "") {
             let url = 'http://localhost:5000/symbol/' + text
-            fetch(url)
-                .then(function(response) {
-                    return response.json();
-                })
-                .then(function(myJson) {
-                    console.log(JSON.stringify(myJson));
-                });
+            this.fetchCompanyData(url);
             this.searchBar.value = "";
         }
     }

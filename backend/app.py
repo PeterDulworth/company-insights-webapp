@@ -12,7 +12,13 @@ def index():
 @app.route('/symbol/<string:symbol>')
 def getSymbol(symbol):
     scrapedData = scrapeNasdaqSymbol(symbol)
-    response = jsonify(Company=scrapedData)
+    
+    if (scrapedData == None):
+        response = jsonify(status=404)
+        response.headers.add('Access-Control-Allow-Origin', '*')    
+        return response
+    
+    response = jsonify(Company=scrapedData, status=200)
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
