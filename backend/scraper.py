@@ -15,6 +15,15 @@ headers = {
 }
 proxies = {'http':'200.136.52.103:80'}
 
+def log(msg):
+    print("[ALERT]: " + msg)
+
+def ifNotNull(query):
+    if query:
+        return query.get_text(strip=True)
+    else:
+        return None
+
 def scrapeNasdaqSymbol(symbol):
     d = {}
     url = baseUrl + str(symbol)
@@ -34,21 +43,24 @@ def scrapeNasdaqSymbol(symbol):
 
             # company name
             headerWrapper = soupPage.find('div', id="qwidget-quote-wrap");
-            rawName = headerWrapper.find('div', id="qwidget_pageheader").h1.text;
+            rawName = ifNotNull(headerWrapper.find('div', id="qwidget_pageheader").h1);
             rawName = rawName.replace('Common Stock ', '')
             rawName = rawName.replace('Quote & Summary Data', '')
             d['companyName'] = rawName.strip() if rawName else ''
+            log("COMPANY NAME OK")
             
             # parse the about section
             descr = soupPage.find('div', id="company-description")
             d['about'] = descr.p.get_text(strip=True).replace('\r\n', ' ')
+            log("ABOUT OK")
         
             # parse the header info
             header = headerWrapper.find('div', id='qwidget_quote')
-            d['name'] = header.find('div', class_="qwidget-symbol").get_text(strip=True)
-            d['price'] = header.find('div', id="qwidget_lastsale").get_text(strip=True)
-            d['netChange'] = header.find('div', id="qwidget_netchange").get_text(strip=True)
-            d['percentChange'] = header.find('div', id="qwidget_percent").get_text(strip=True)
+            d['symbol'] = ifNotNull(header.find('div', class_="qwidget-symbol"))
+            d['price'] = ifNotNull(header.find('div', id="qwidget_lastsale"))
+            d['netChange'] = ifNotNull(header.find('div', id="qwidget_netchange"))
+            d['percentChange'] = ifNotNull(header.find('div', id="qwidget_percent"))
+            log("HEADER INFO OK")
 
             keyStockData = {}
             table = soupPage.find('div', class_="row overview-results relativeP")
@@ -57,21 +69,34 @@ def scrapeNasdaqSymbol(symbol):
             col2 = cols[1].div
             kvPairs = col1.find_all('div', class_='table-row') + col2.find_all('div', class_='table-row')
             for i in kvPairs:
-                print(i)
                 key = i.find_all('div', class_="table-cell")[0].b.text
                 value = i.find_all('div', class_="table-cell")[1].text
-                print (key)
-                print (value)
                 key = ''.join(key).strip() 
                 value = ' '.join(''.join(value).split()) 
-                print (value)
                 keyStockData[key] = value
             d['keyStockData'] = keyStockData
+            log("KEY STOCK DATA OK")
 
             return d
 
         except Exception as e:
             print("Failed to process the request, Exception:%s"%(e))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -6,11 +6,11 @@ app = Flask(__name__)
     
 @app.route('/')
 def index():
-    return '<h1>Welcome to Company Insights!</h1>'
+    return '<h1>Welcome to Company Insights API!</h1>Checkout the project on <a href="https://github.com/PeterDulworth/nesh-company-insights">github!</a>'
 
 # e.g. http://localhost:5000/symbol/OXY
 @app.route('/symbol/<string:symbol>')
-def index2(symbol):
+def getSymbol(symbol):
     scrapedData = scrapeNasdaqSymbol(symbol)
     response = jsonify(Company=scrapedData)
     response.headers.add('Access-Control-Allow-Origin', '*')
