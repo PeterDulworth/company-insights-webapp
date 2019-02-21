@@ -12,13 +12,9 @@ def index():
 @app.route('/symbol/<string:symbol>')
 def index2(symbol):
     scrapedData = scrapeNasdaqSymbol(symbol)
-    return jsonify(Company=scrapedData)
-
-@app.route('/symbol2/<string:symbol>')
-def index3(symbol):
-    scrapedData = parse_finance_page(symbol)
-    return jsonify(Company=scrapedData)
-
+    response = jsonify(Company=scrapedData)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=5000)

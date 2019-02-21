@@ -10,7 +10,15 @@ class Search extends Component {
         event.preventDefault();
         var text = this.searchBar.value;
         if (text !== "") {
-        this.searchBar.value = "";
+            let url = 'http://localhost:5000/symbol/' + text
+            fetch(url)
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(myJson) {
+                    console.log(JSON.stringify(myJson));
+                });
+            this.searchBar.value = "";
         }
     }
 
@@ -19,7 +27,7 @@ class Search extends Component {
             <form onSubmit={this.handleSubmit} className="search-form">
                 <FormControl
                   className={[styles.searchBar, styles.search, styles.searchText].join(' ')}
-                  placeholder=" enter company ticker"
+                  placeholder="enter company ticker"
                   ref={b => (this.searchBar = b)}
                   type="string"
                 />

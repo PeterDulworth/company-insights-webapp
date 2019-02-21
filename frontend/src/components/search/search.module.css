@@ -1,11 +1,11 @@
 .searchBar {
   position: absolute;
-  top: 0.4em;
-  z-index: 0;
+  top: 1.0em;
   box-sizing: content-box;
-  color: white;
+  text-align: center;
 }
 
+/* style the placeholder text  */
 .searchBar::placeholder {
   color: rgb(255, 255, 255);
 }
@@ -21,10 +21,15 @@
   background-repeat: no-repeat;
   border-radius: 50px;
   border: 3px solid white;
+  
   transition: all 250ms ease-in-out;
   backface-visibility: hidden;
   transform-style: preserve-3d;
 }
+
+/* .search:focus { */
+  /* text-align: left; */
+/* } */
 
 .searchForm {
   position: relative;

@@ -5,9 +5,9 @@ import style from "./App.module.css";
 class App extends Component {
   render() {
     return (
-      <div className={style.App}>
-        <div className={style.siteTitle}>Company Insights</div>
-        <div className={style.siteSubTitle}>Make your dream home come true</div>            
+      <div className={style.wrapper}>
+        <div className={style.title}>Company Insights</div>
+        <div className={style.subtitle}>Easily check up on your favorite companies.</div>            
         <Search />
       </div>
     );
