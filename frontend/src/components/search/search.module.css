@@ -1,0 +1,39 @@
+.searchBar {
+  position: absolute;
+  top: 0.4em;
+  z-index: 0;
+  box-sizing: content-box;
+  color: white;
+}
+
+.searchBar::placeholder {
+  color: rgb(255, 255, 255);
+}
+
+.search {
+  width: 90%;
+  padding-top: 1vh;
+  position: relative;
+  display: block;
+  margin: 0 auto;
+  color: white;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border-radius: 50px;
+  border: 3px solid white;
+  transition: all 250ms ease-in-out;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+.searchForm {
+  position: relative;
+  width: 60vh;
+  margin: 0 auto;
+}
+
+.searchText {
+  margin-top: 1.5vh;
+  font-size: 30px;
+  font-weight: bold;
+}

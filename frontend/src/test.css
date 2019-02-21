@@ -1,0 +1,17 @@
+.siteTitle {
+  color: white;
+  font-weight: bold;
+  font-size: 64px;
+  line-height: 1.2;
+}
+
+.siteSubTitle {
+  color: white;
+  font-size: 18px;
+}
+
+.searchWrapper {
+  text-align: center;
+  color: white;
+  padding-top: 10vh;
+}

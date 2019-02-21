@@ -1,0 +1,33 @@
+.App {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  
+  background: linear-gradient(180deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 100%);
+  min-height: 100vh;
+  position: relative;
+  /* padding-top: -125px; */
+  overflow: hidden;
+}
+
+.siteTitle {
+  color: white;
+  font-weight: bold;
+  font-size: 64px;
+  line-height: 1.2;
+}
+
+.siteSubTitle {
+  color: white;
+  font-size: 18px;
+}
+
+.searchWrapper {
+  text-align: center;
+  color: white;
+  padding-top: 10vh;
+}
