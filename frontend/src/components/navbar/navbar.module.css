@@ -1,0 +1,21 @@
+.gradText {
+    background-image: -webkit-linear-gradient(90deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 100%);
+    background-image: linear-gradient(90deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 100%);
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+  
+.btn:hover {
+    color: black;
+}
+
+.az {
+    text-decoration: none;
+    color: inherit;
+}
+
+.az:hover {
+    text-decoration: none;
+    color: inherit;
+}

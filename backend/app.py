@@ -18,7 +18,7 @@ def getSymbol(symbol):
         response.headers.add('Access-Control-Allow-Origin', '*')    
         return response
     
-    response = jsonify(Company=scrapedData, status=200)
+    response = jsonify(company=scrapedData, status=200)
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 

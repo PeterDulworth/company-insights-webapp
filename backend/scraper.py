@@ -47,12 +47,12 @@ def scrapeNasdaqSymbol(symbol):
             rawName = ifNotNull(headerWrapper.find('div', id="qwidget_pageheader").h1);
             rawName = rawName.replace('Common Stock ', '')
             rawName = rawName.replace('Quote & Summary Data', '')
-            d['companyName'] = rawName.strip() if rawName else ''
+            d['name'] = rawName.strip() if rawName else ''
             log("COMPANY NAME OK")
             
             # parse the about section
             descr = soupPage.find('div', id="company-description")
-            d['about'] = descr.p.get_text(strip=True).replace('\r\n', ' ')
+            d['about'] = descr.p.get_text(strip=True).replace('\r\n', ' ').replace('...More...', '').replace('View Company Description as filed with the SEC...', '')
             log("ABOUT OK")
         
             # parse the header info
