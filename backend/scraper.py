@@ -16,7 +16,7 @@ headers = {
 proxies = {'http':'200.136.52.103:80'}
 
 def log(msg):
-    print("[ALERT]: " + msg)
+    print("[ALERT] " + msg)
 
 def ifNotNull(query):
     if query:
@@ -29,10 +29,11 @@ def scrapeNasdaqSymbol(symbol):
     url = baseUrl + str(symbol)
 
     # Retrying for failed request
-    for retries in range(5):
+    for retries in range(3):
         try:
             # make the request
-            response = requests.get(url, headers=headers, proxies=proxies, verify=False)
+            # response = requests.get(url, headers=headers, proxies=proxies, verify=False)
+            response = requests.get(url, headers=headers, proxies=proxies)
 
             # if there is an error with the request, try again
             if response.status_code != 200:

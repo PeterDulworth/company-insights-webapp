@@ -1,4 +1,11 @@
-.wrapper {
+.app {
+  background: linear-gradient(180deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 100%);
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.searchWrapper {
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -6,12 +13,7 @@
   align-items: center;
   height: 100vh;
   width: 100vw;
-  
-  background: linear-gradient(180deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 100%);
-  min-height: 100vh;
-  position: relative;
   padding-bottom: 200px;
-  overflow: hidden;
 }
 
 .title {

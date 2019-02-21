@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { FormControl } from "react-bootstrap";
 import styles from './search.module.css';
+import { Redirect } from "react-router-dom";
 
 class Search extends Component {
 
@@ -9,41 +10,42 @@ class Search extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            companyData: null
+            companyData: null,
+            redirect: false,
+            symbol: '',
         };
-    }
-
-    async fetchCompanyData(url) {
-        const response = await fetch(url);
-        const json = await response.json();
-        console.log(JSON.stringify(json));
-        if (json.status === 404) {
-            alert("Invalid ticker.\n Please try again!")
-        }
-        this.setState({ companyData: json });
     }
 
     handleSubmit = (event) => {
         event.preventDefault();
         var text = this.searchBar.value;
         if (text !== "") {
-            let url = 'http://localhost:5000/symbol/' + text
-            this.fetchCompanyData(url);
             this.searchBar.value = "";
+            this.setState({redirect: true, symbol: text});
         }
     }
 
     render() {
+        const newURL = '/' + this.state.symbol;
+        const queryRedirect = <Redirect to={newURL} />;
+
         return (
-            <form onSubmit={this.handleSubmit} className="search-form">
-                <FormControl
-                  className={[styles.searchBar, styles.search, styles.searchText].join(' ')}
-                  placeholder="enter company ticker"
-                  ref={b => (this.searchBar = b)}
-                  type="string"
-                />
-              </form>
+            <React.Fragment>
+                {this.state.redirect ? 
+                    queryRedirect
+                    : 
+                    <form onSubmit={this.handleSubmit} className="search-form">
+                        <FormControl
+                        className={[styles.searchBar, styles.search, styles.searchText].join(' ')}
+                        placeholder="enter company ticker"
+                        ref={b => (this.searchBar = b)}
+                        type="string"
+                        />
+                    </form>
+                }
+            </React.Fragment>
         );
+            
     }
 }[styles.foo, styles.bar].join(' ')
 

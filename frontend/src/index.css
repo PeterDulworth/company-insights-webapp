@@ -50,3 +50,7 @@ ul {
 form {
   display: block;
 }
+
+a:hover {
+  text-decoration: none;
+}
