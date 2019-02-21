@@ -24,7 +24,7 @@ class Card extends Component {
                 {this.props.text}
 
                 {this.props.data &&
-                <Table>
+                 <Table hover> {/* striped bordered */}
                     <tbody>
                         {l}
                     </tbody>
