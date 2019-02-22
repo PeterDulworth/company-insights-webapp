@@ -9,10 +9,10 @@ class Article extends Component {
     render() {
         return (
             <div className={styles.wrapper}>
-                {this.props.name}                
-                {this.props.date}                
-                {this.props.link}                
-                {this.props.author}                
+                <h4>{this.props.name}</h4>
+                <a href="{this.props.link}">link</a>
+                Date: {this.props.date}                
+                Author: {this.props.author}                
             </div>
         );
     }

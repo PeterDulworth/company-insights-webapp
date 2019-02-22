@@ -81,7 +81,7 @@ class Display extends Component {
                     :
                     queryRedirect) : 
                 <div className={styles.loadingWrapper}>
-                    <h1>loading...</h1>
+                    <h1>loading articles...</h1>
                 </div>
             }
             </div>
