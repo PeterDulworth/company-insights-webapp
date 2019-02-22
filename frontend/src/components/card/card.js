@@ -8,7 +8,6 @@ class Card extends Component {
     }
 
     render() {
-
         var l = [];
         if (this.props.data) {
             l = Object.keys(this.props.data).map(k => 
@@ -29,21 +28,16 @@ class Card extends Component {
 
         return (
             <div className={styles.wrapper}>
-                
                 <h2>{this.props.title}</h2>
-                {/* <hr /> */}
                 {this.props.split}
                 {this.props.text}
-
+                
                 {this.props.data &&
-                    <><br/>
-                 <Table hover> {/* striped bordered */}
-                    <tbody>
-                        {l}
-                    </tbody>
-                </Table></>
+                    <>
+                        <br/>
+                        <Table hover><tbody>{l}</tbody></Table>
+                    </>
                 }
-
             </div>
         );
     }

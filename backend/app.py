@@ -48,6 +48,7 @@ def getSymbolEarningsCalls(symbol):
     
     response = jsonify(calls=calls, status=200)
     response.headers.add('Access-Control-Allow-Origin', '*')
+    # print(calls)
     return response
 
 if __name__ == "__main__":

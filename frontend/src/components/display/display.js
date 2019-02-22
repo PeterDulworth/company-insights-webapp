@@ -4,6 +4,7 @@ import styles from './display.module.css';
 import NavBar from "../navbar/navbar"
 import Card from '../card/card';
 import Article from '../article/article';
+import Call from '../call/call';
 
 class Display extends Component {
 
@@ -16,6 +17,9 @@ class Display extends Component {
             companyArticles: null,
             validArticles: true,
             articlesLoaded: false,
+            companyCalls: null,
+            validCalls: true,
+            callsLoaded: false,
         };
     }
 
@@ -39,12 +43,25 @@ class Display extends Component {
         this.setState({ companyArticles: json.articles, articlesLoaded: true });
     }
 
+    async fetchCalls(url) {
+        const response = await fetch(url);
+        const json = await response.json();
+        console.log(JSON.stringify(json));
+        if (json.status === 404) {
+            this.setState({validCalls: false})
+        }
+        this.setState({ companyCalls: json.calls, callsLoaded: true });
+    }
+
     componentDidMount() {
         let url = 'http://localhost:5000/symbol' + this.props.symbol;
         this.fetchCompanyData(url);
         
         url = 'http://localhost:5000/symbol/headlines' + this.props.symbol;
         this.fetchArticles(url);
+
+        url = 'http://localhost:5000/symbol/earnings/calls' + this.props.symbol;
+        this.fetchCalls(url);
     }
 
     render() {
@@ -52,6 +69,7 @@ class Display extends Component {
         const queryRedirect = <Redirect to={errURL} />;
         const d = this.state.companyData;
         const articles = this.state.companyArticles;
+        const calls = this.state.companyCalls;
 
         return (
             <div className={styles.displayWrapper}>
@@ -83,12 +101,31 @@ class Display extends Component {
                         </div>
                     </>
                     :
-                    queryRedirect) : 
+                    <div className={styles.loadingWrapper}>
+                        <h1>error loading articles...</h1>
+                    </div>
+                    ) : 
                 <div className={styles.loadingWrapper}>
                     <h1>loading articles...</h1>
                 </div>
             }
-            <Card title="Earnings Calls" />
+            {this.state.callsLoaded ? 
+                (this.state.validCalls ? 
+                    <>
+                        <Card title="Earnings Calls" />
+                        <div className={styles.callsWrapper}>
+                            {calls.map(c => (<Call key={c.name} name={c.name} link={c.link} date={c.date} />))}
+                        </div>
+                    </>
+                    :
+                    <div className={styles.loadingWrapper}>
+                        <h1>error loading calls...</h1>
+                    </div>
+                    ) : 
+                <div className={styles.loadingWrapper}>
+                    <h1>loading calls...</h1>
+                </div>
+            }
             </div>
         );
     }
