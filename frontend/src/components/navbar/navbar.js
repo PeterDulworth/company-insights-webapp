@@ -3,10 +3,6 @@ import { Link } from "react-router-dom";
 import styles from "./navbar.module.css";
 
 class Nav extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <nav className="navbar fixed-top navbar-light bg-light">

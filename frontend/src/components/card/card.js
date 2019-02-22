@@ -3,17 +3,13 @@ import Table from 'react-bootstrap/Table'
 import styles from './card.module.css';
 
 class Card extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         var l = [];
         if (this.props.data) {
             l = Object.keys(this.props.data).map(k => 
                 <tr key={k}>
                     <td>{k}</td>
-                    {k == "Net Change" || k == "Percent Change" ?
+                    {k === "Net Change" || k === "Percent Change" ?
                         (this.props.dir === 'incr' ? 
                             <td className={styles.green}>+{this.props.data[k]}</td>
                             :
