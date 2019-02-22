@@ -10,13 +10,13 @@ class Nav extends React.Component {
   render() {
     return (
       <nav className="navbar fixed-top navbar-light bg-light">
-        <div className={["navbar-brand mb-0 h2", styles.az].join(" ")}>
+        <div className={["navbar-brand mb-0 h2", styles.az].join(' ')}>
           <b>
             <h2 className={styles.gradText}>{this.props.title}</h2>
           </b>
         </div>
-        <span className="navbar-text">
-          <Link to="/" className={styles.az}>back to search page</Link>
+        <span className={styles.gradText}>
+          <Link to="/" className={[styles.gradText, styles.az].join(' ')}>back to search page</Link>
         </span>
       </nav>
     );

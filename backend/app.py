@@ -22,5 +22,19 @@ def getSymbol(symbol):
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
+# e.g. http://localhost:5000/symbol/OXY/news-headlines
+@app.route('/symbol/headlines/<string:symbol>')
+def getSymbolHeadlines(symbol):
+    headlines = scrapeNasdaqHeadlines(symbol)
+    
+    if (headlines == None):
+        response = jsonify(status=404)
+        response.headers.add('Access-Control-Allow-Origin', '*')    
+        return response
+    
+    response = jsonify(articles=headlines, status=200)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=5000)

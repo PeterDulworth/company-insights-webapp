@@ -85,11 +85,32 @@ def scrapeNasdaqSymbol(symbol):
         except Exception as e:
             print("Failed to process the request, Exception:%s"%(e))
 
+def scrapeNasdaqHeadlines(symbol):
+    d = {}
+    url = baseUrl + str(symbol) + '/news-headlines'
+    log(url)
 
+    # Retrying for failed request
+    for retries in range(3):
+        try:
+            # make the request
+            response = requests.get(url, headers=headers, proxies=proxies)
 
+            # if there is an error with the request, try again
+            if response.status_code != 200:
+                raise ValueError("Invalid Response Received From Server!")
 
+            # convert the page into a beautiful soup object
+            soupPage = BeautifulSoup(response.text, "html.parser")
 
+            # company name
+            news = soupPage.find('div', class_="news-headlines");
 
+            articles = news.find_all(lambda tag: not tag.has_attr('class') and not tag.has_attr('id') and tag.name=='div', recursive=False)
+            return list(map(lambda article: {'name': article.span.a.text, 'date': article.small.text.strip().split('-')[0][:-1], 'author': article.small.text.strip().split('-')[1][1:], 'link': article.span.a['href']}, articles))
+
+        except Exception as e:
+            print("Failed to process the request, Exception:%s"%(e))
 
 
 
