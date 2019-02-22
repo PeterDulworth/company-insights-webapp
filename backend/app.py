@@ -36,6 +36,7 @@ def getSymbolHeadlines(symbol):
     return response
 
 # e.g. http://localhost:5000/symbol/earnings/calls/OXY
+# test: curl -i http://localhost:5000/symbol/earnings/calls/aapl
 @app.route('/symbol/earnings/calls/<string:symbol>')
 def getSymbolEarningsCalls(symbol):
     calls = scrapeSeekingAlphaEarningsCalls(symbol)
