@@ -1,6 +1,5 @@
 from flask import Flask, jsonify
 from scraper import *
-from nasdaq_finance import *
 
 app = Flask(__name__)
     
@@ -22,7 +21,7 @@ def getSymbol(symbol):
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
-# e.g. http://localhost:5000/symbol/OXY/news-headlines
+# e.g. http://localhost:5000/symbol/news-headlines/OXY
 @app.route('/symbol/headlines/<string:symbol>')
 def getSymbolHeadlines(symbol):
     headlines = scrapeNasdaqHeadlines(symbol)
@@ -33,6 +32,20 @@ def getSymbolHeadlines(symbol):
         return response
     
     response = jsonify(articles=headlines, status=200)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
+# e.g. http://localhost:5000/symbol/earnings/calls/OXY
+@app.route('/symbol/earnings/calls/<string:symbol>')
+def getSymbolEarningsCalls(symbol):
+    calls = scrapeSeekingAlphaEarningsCalls(symbol)
+    
+    if (calls == None):
+        response = jsonify(status=404)
+        response.headers.add('Access-Control-Allow-Origin', '*')    
+        return response
+    
+    response = jsonify(calls=calls, status=200)
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 

@@ -56,3 +56,7 @@ form {
 a:hover {
   text-decoration: none;
 }
+
+h2 {
+  margin: 0;
+}

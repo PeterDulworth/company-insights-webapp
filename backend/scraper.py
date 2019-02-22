@@ -112,6 +112,32 @@ def scrapeNasdaqHeadlines(symbol):
         except Exception as e:
             print("Failed to process the request, Exception:%s"%(e))
 
+def scrapeSeekingAlphaEarningsCalls(symbol):
+    d = {}
+    url = 'https://seekingalpha.com/symbol/' + str(symbol) + '/earnings/transcripts'
+    log(url)
+
+    # Retrying for failed request
+    for retries in range(3):
+        try:
+            # make the request
+            response = requests.get(url, headers={"Referer": "http://seekingalpha.com/", "User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36"}, proxies=proxies, verify=False)
+
+            # if there is an error with the request, try again
+            if response.status_code != 200:
+                raise ValueError("Invalid Response Received From Server!")
+
+            # convert the page into a beautiful soup object
+            soupPage = BeautifulSoup(response.text, "html.parser")
+
+            table = soupPage.find('div', id="headlines_transcripts")
+            print(table)
+            calls = table.find_all("div", {"class":"symbol_article"});
+            return list(map(lambda call: {'name': call.a.text, 'link': 'https://seekingalpha.com' + call.a['href'], 'date': call.div.find(text=True, recursive=False)}, calls))
+            # return 
+
+        except Exception as e:
+            print("Failed to process the request, Exception:%s"%(e))
 
 
 

@@ -88,6 +88,7 @@ class Display extends Component {
                     <h1>loading articles...</h1>
                 </div>
             }
+            <Card title="Earnings Calls" />
             </div>
         );
     }

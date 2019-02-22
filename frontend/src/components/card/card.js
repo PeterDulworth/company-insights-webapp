@@ -36,11 +36,12 @@ class Card extends Component {
                 {this.props.text}
 
                 {this.props.data &&
+                    <><br/>
                  <Table hover> {/* striped bordered */}
                     <tbody>
                         {l}
                     </tbody>
-                </Table>
+                </Table></>
                 }
 
             </div>
