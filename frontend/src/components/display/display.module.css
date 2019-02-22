@@ -6,7 +6,6 @@
     align-items: center;
     width: 100vw;
     color: white;
-    padding-top: 125px;
 }
 
 .loadingWrapper {
@@ -19,6 +18,26 @@
     height: 100vh;
 }
 
+.articleWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 50vw;
+    min-width: 500px;
+    overflow: hidden;
+}
+
+.articleWrapper > * {
+    margin-right: 10px;
+    max-width: 250px;
+}
+
 .bold {
     font-weight: bolder;
+}
+
+.spacer {
+    height: 125px;
 }

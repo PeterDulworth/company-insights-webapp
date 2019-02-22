@@ -11,9 +11,11 @@
 }
 
 .green {
+    font-weight: bold;
     color: var(--green);
 }
 
 .red {
+    font-weight: bold;
     color: var(--danger); 
 }

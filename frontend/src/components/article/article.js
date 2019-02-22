@@ -10,9 +10,7 @@ class Article extends Component {
         return (
             <div className={styles.wrapper}>
                 <h4>{this.props.name}</h4>
-                <a href="{this.props.link}">link</a>
-                Date: {this.props.date}                
-                Author: {this.props.author}                
+                Click <a target="_blank" href={this.props.link}>here</a> to read the article. <span className={styles.gray}>Written on {this.props.date} by {this.props.author}.</span>
             </div>
         );
     }

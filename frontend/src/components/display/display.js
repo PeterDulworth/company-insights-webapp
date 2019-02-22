@@ -57,8 +57,9 @@ class Display extends Component {
             <div className={styles.displayWrapper}>
             {this.state.dataLoaded ? 
                 (this.state.validResponse ? 
-                    <React.Fragment>
+                    <>
                         <NavBar title={d.name}/>
+                        <div className={styles.spacer}></div>
                         <Card title="Quick Overview" dir={d.netChangeDir} data={{
                             "Price": d.price, 
                             "Net Change": d.netChange, 
@@ -66,7 +67,7 @@ class Display extends Component {
                             }}/>
                         <Card split={<hr/>} title="Company SEC Description" text={d.about}/>
                         <Card title="Financial Numbers" data={d.keyStockData}/>
-                    </React.Fragment>
+                    </>
                     :
                     queryRedirect) : 
                 <div className={styles.loadingWrapper}>
@@ -75,9 +76,12 @@ class Display extends Component {
             }
             {this.state.articlesLoaded ? 
                 (this.state.validArticles ? 
-                    <React.Fragment>
-                        {articles.map(a => (<Article name={a.name} link={a.link} date={a.date} author={a.author}/>))}
-                    </React.Fragment>
+                    <>
+                        <Card title="Articles" />
+                        <div className={styles.articleWrapper}>
+                            {articles.map(a => (<Article key={a.name} name={a.name} link={a.link} date={a.date} author={a.author}/>))}
+                        </div>
+                    </>
                     :
                     queryRedirect) : 
                 <div className={styles.loadingWrapper}>
