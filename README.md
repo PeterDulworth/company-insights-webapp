@@ -30,4 +30,20 @@ curl -i http://localhost:5000/symbol/oxy
 
 ### Features
 
+- Quick Overview
+    - includes last stock price, net change in price in past day and percent change in price over past day
+- company description
+    - includes a brief description of the company (pulled from their SEC filing)
+- financial numbers
+    - includes important financial numbers
+- news articles
+    - includes recently published news articles relating to the given company
+- Analysis of Earnings Call Transcript 
+    - When did the call happen
+    - Who all was on the call
+    - Who Spoke the Longest
+
 ### Ideas for future updates
+
+- handle mobile better
+- better error handling for scraper (rn if a website changes will break very easily)
