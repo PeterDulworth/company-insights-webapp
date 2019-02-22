@@ -42,8 +42,12 @@ class Display extends Component {
                     <React.Fragment>
                         <NavBar title={d.name}/>
                         <div className={styles.displayWrapper}>
-                            <Card title="Quick Overview" text={"Percent Change: " + d.percentChange + "Net Change: " + d.netChange + "\nPrice: " + d.price}/>
-                            <Card title="Company SEC Description" text={d.about}/>
+                            <Card title="Quick Overview" dir={d.netChangeDir} data={{
+                                "Price": d.price, 
+                                "Net Change": d.netChange, 
+                                "Percent Change": d.percentChange,
+                                }}/>
+                            <Card split={<hr/>} title="Company SEC Description" text={d.about}/>
                             <Card title="Financial Numbers" data={d.keyStockData}/>
                         </div>
                     </React.Fragment>

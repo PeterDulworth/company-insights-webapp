@@ -9,3 +9,11 @@
     border-radius: 5px;
     padding: 20px;
 }
+
+.green {
+    color: var(--green);
+}
+
+.red {
+    color: var(--danger); 
+}

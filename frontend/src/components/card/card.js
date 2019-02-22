@@ -11,16 +11,28 @@ class Card extends Component {
 
         var l = [];
         if (this.props.data) {
-            l = Object.keys(this.props.data).map(k => <tr key={k}><td>{k}</td><td>{this.props.data[k]}</td></tr>);
+            l = Object.keys(this.props.data).map(k => 
+                <tr key={k}>
+                    <td>{k}</td>
+                    {k == "Net Change" || k == "Percent Change" ?
+                        (this.props.dir === 'incr' ? 
+                            <td className={styles.green}>+{this.props.data[k]}</td>
+                            :
+                            <td className={styles.red}>-{this.props.data[k]}</td>
+                        )
+                        :
+                        <td>{this.props.data[k]}</td>
+                    }
+                </tr>
+            );
         }
 
         return (
             <div className={styles.wrapper}>
                 
                 <h2>{this.props.title}</h2>
-             
-                <hr/>
-             
+                {/* <hr /> */}
+                {this.props.split}
                 {this.props.text}
 
                 {this.props.data &&

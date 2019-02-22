@@ -59,7 +59,9 @@ def scrapeNasdaqSymbol(symbol):
             header = headerWrapper.find('div', id='qwidget_quote')
             d['symbol'] = ifNotNull(header.find('div', class_="qwidget-symbol"))
             d['price'] = ifNotNull(header.find('div', id="qwidget_lastsale"))
-            d['netChange'] = ifNotNull(header.find('div', id="qwidget_netchange"))
+            netChange = header.find('div', id="qwidget_netchange")
+            d['netChange'] = ifNotNull(netChange)
+            d['netChangeDir'] = 'incr' if 'qwidget-Green' in netChange['class'] else 'decr' 
             d['percentChange'] = ifNotNull(header.find('div', id="qwidget_percent"))
             log("HEADER INFO OK")
 
