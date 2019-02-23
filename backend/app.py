@@ -54,16 +54,16 @@ def getSymbolHeadlines(symbol):
 # test: curl -i http://localhost:5000/symbol/earnings/calls/aapl
 @app.route('/symbol/earnings/calls/<string:symbol>')
 def getSymbolEarningsCalls(symbol):
-    # calls = scrapeSeekingAlphaEarningsCalls(symbol)
+    calls = scrapeSeekingAlphaEarningsCalls(symbol)
     
-    # if (calls == None):
+    if (calls == None):
         response = jsonify(status=404)
         response.headers.add('Access-Control-Allow-Origin', '*')    
         return response
     
-    # response = jsonify(calls=calls, status=200)
-    # response.headers.add('Access-Control-Allow-Origin', '*')
-    # return response
+    response = jsonify(calls=calls, status=200)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 # e.g. curl -i http://localhost:5000/call/4144365-tesla-tsla-q4-2017-results-earnings-call-transcript
 @app.route('/call/<string:callURL>')

@@ -148,8 +148,6 @@ def scrapeCall(callPath):
             # make the request
             response = requests.get(url, headers=getHeaders(Site.SA), proxies=getProxy())
             
-            print(response.text)
-
             # if there is an error with the request, try again
             if response.status_code != 200:
                 raise ValueError("Invalid Response Received From Server!")
@@ -163,6 +161,23 @@ def scrapeCall(callPath):
             # use these names to find the text spoken by each person
             # detect if the call is a slide deck: "The following slide deck"
 
+            extracts = []
+            keywords = ['Analysis']
+            bodyAll = soupPage.find_all("div", {"id":"a-body"})
+            if bodyAll:
+                bodyAll = bodyAll[0].text
+                body = bodyAll.split("\n")
+                for p in body:
+                    print(p)
+                    if any(keyword in p for keyword in keywords):
+                        extracts.append({
+                                        # "title": title,
+                                        # "date": date,
+                                        # "time": time, 
+                                        "bodyContent": p
+                                        })
+
+                return extracts
             # find the article itself
             article = soupPage.find('article')
             a = article.find('div', id="a-cont", recursive=False)
