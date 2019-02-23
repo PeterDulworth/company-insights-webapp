@@ -28,9 +28,7 @@ def loginSA():
     }
 
     # Authenticate
-    headers = {"Referer": "http://seekingalpha.com/", "User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36"}
-    response = sessionRequests.post(loginUrl, data = loginData, proxies=getProxy(), headers=headers)
-
+    response = sessionRequests.post(loginUrl, data = loginData, headers=getHeaders(Site.SA), proxies=getProxy())
     return [response.status_code, sessionRequests]
 
 if __name__ == "__main__":
