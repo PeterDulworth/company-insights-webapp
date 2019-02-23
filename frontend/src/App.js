@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Search from "./components/search/search"
 import Display from "./components/display/display"
+import CallAnalysis from "./components/callAnalysis/callAnalysis"
 import style from "./App.module.css";
 import { Route, Switch, Link } from "react-router-dom";
 
@@ -12,6 +13,7 @@ class App extends Component {
           <Route exact path="/" component={searchPage} />
           <Route exact path="/:symbol" component={resultsPage}/>
           <Route exact path="/:symbol/error" component={invalidQueryPage}/>
+          <Route exact path="/analysis/article/:articleID" component={CallAnalysis}/>
           <Route component={errorPage}/>
         </Switch>
       </div>

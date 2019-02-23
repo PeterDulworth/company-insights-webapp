@@ -10,7 +10,6 @@ class Search extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            companyData: null,
             redirect: false,
             symbol: '',
         };
@@ -27,18 +26,17 @@ class Search extends Component {
 
     render() {
         const newURL = '/' + this.state.symbol;
-        const queryRedirect = <Redirect to={newURL} />;
 
         return (
             <React.Fragment>
                 {this.state.redirect ? 
-                    queryRedirect
+                    <Redirect to={newURL} />
                     : 
                     <form onSubmit={this.handleSubmit} className="search-form">
                         <FormControl
                         className={[styles.searchBar, styles.search, styles.searchText].join(' ')}
                         placeholder="enter company ticker"
-                        ref={b => (this.searchBar = b)}
+                        ref={sb => (this.searchBar = sb)}
                         type="string"
                         />
                     </form>
@@ -47,6 +45,6 @@ class Search extends Component {
         );
             
     }
-}[styles.foo, styles.bar].join(' ')
+}
 
 export default Search;

@@ -60,3 +60,7 @@ curl -i http://localhost:5000/symbol/oxy
 - better error handling for scraper (rn if a website changes will break very easily)
 - i had trouble getting access to the full earnings calls
 - seeking alpha had too much javascript
+
+Challenges
+- parsing the transcripts is hard because there is so little to work with
+- dealing with authentication

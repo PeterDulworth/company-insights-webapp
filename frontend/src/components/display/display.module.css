@@ -18,6 +18,16 @@
     height: 100vh;
 }
 
+.errLoadingWrapper {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    height: 100vh;
+}
+
 .articleWrapper {
     display: flex;
     flex-direction: row;
@@ -56,4 +66,16 @@
 
 .spacer {
     height: 125px;
+}
+
+.reloadBtn {
+    border-radius: 15px;
+    padding: 0px 15px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+    background: rgba(255, 255, 255, 0.85);
+}
+
+.reloadBtn:hover {
+    transform: scale(1.03);
+    background: rgba(255, 255, 255, 0.79);
 }
