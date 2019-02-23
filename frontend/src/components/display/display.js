@@ -5,6 +5,9 @@ import NavBar from "../navbar/navbar"
 import Card from '../card/card';
 import Article from '../article/article';
 import Call from '../call/call';
+import dummyCompanyData from '../../dummyData/dummyCompanyData';
+import dummyArticlesData from '../../dummyData/dummyArticlesData';
+import dummyCallData from '../../dummyData/dummyCallsData';
 
 class Display extends Component {
 
@@ -72,10 +75,25 @@ class Display extends Component {
         }
     }
 
+    useDummyCompanyData = () => {
+        this.setState({ validData: true, companyData: dummyCompanyData.company, dataLoaded: true })
+    }
+
+    useDummyArticlesData = () => {
+        this.setState({ companyArticles: dummyArticlesData.articles, articlesLoaded: true, validArticles: true })
+    }
+
+    useDummyCallData = () => {
+        this.setState({validCalls: true, companyCalls: dummyCallData.calls, callsLoaded: true})
+    }
+
     componentDidMount() {
-        this.fetchCompanyData();
-        this.fetchArticles();
-        this.fetchCalls();
+        this.useDummyCompanyData();
+        this.useDummyArticlesData();
+        this.useDummyCallData();
+        // this.fetchCompanyData();
+        // this.fetchArticles();
+        // this.fetchCalls();
     }
 
     componentWillUnmount() {

@@ -112,7 +112,7 @@ def scrapeNasdaqHeadlines(symbol):
             print("Failed to process the request, Exception:%s"%(e))
 
 def scrapeSeekingAlphaEarningsCalls(symbol):
-    time.sleep(1)
+    time.sleep(2)
     url = 'http://seekingalpha.com/symbol/%s/earnings/transcripts' % (symbol)
     tag = "EARNINGS CALLS"
     log(url, tag=tag)

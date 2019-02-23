@@ -34,6 +34,7 @@ class Card extends Component {
                         <Table hover><tbody>{l}</tbody></Table>
                     </>
                 }
+                {this.props.children}
             </div>
         );
     }
