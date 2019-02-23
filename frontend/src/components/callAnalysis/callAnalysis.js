@@ -39,7 +39,8 @@ class CallAnalysis extends Component {
 
     render() {
         return (
-            <NavBar title={this.props.match.params.articleID}/>
+            <NavBar title={this.props.location.state.title}/>
+            // {/* <NavBar title={this.props.match.params.articleID}/> */}
         );
     }
 }

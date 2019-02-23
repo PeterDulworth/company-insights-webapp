@@ -156,47 +156,85 @@ def scrapeCall(callPath):
 
             # convert the page into a beautiful soup object
             soupPage = BeautifulSoup(response.text, "html.parser")
+            
+            # find the article itself
+            # article = soupPage.find('article')
+            body = soupPage.find("div", {"id":"a-body"})
+            # paragraphs = body.find_all(lambda tag: 'p p' in tag['class'])
+            paragraphs = body.find_all('p')
+
+            questions = []
+            answers = []
+
+            # construct list of names of people asking and answering questions
+            for p in paragraphs:
+                if (p.contents[0].name == 'strong'):
+                    if (p.strong.contents[0].name == 'span'):
+                        if (p.strong.span['class'][0] == 'question'):
+                            questions.append(p.strong.span.text)
+                        if (p.strong.span['class'][0] == 'answer'):
+                            answers.append(p.strong.span.text)
+
+            for p in questions + answers:
+                print(type(p))
+
+            d = {}
+            for p in questions + answers:
+                if p not in d:
+                    d[p] = {"asked": 0, "answered": 0}
+
+            for p in questions: 
+                d[p]["asked"] += 1
+
+            for p in answers: 
+                d[p]["answered"] += 1
+
+            return { "text": list(map(lambda tag: tag.text, paragraphs)), "questions": questions, "answers": answers, "stats": d}
+            
+            # execs = []
+            # analysts = []
+            # wordCount = {}
 
             # find a list of executives
             # find a list of analysts
             # find the operator
             # use these names to find the text spoken by each person
             # detect if the call is a slide deck: "The following slide deck"
-            body = soupPage.find_all("div", {"id":"a-body"})
-            if body:
-                body = body[0].text
-                paragraphs = body.split("\n")
+            # body = soupPage.find_all("div", {"id":"a-body"})
+            # if body:
+            #     body = body[0].text
+            #     paragraphs = body.split("\n")
                 
-                # if its a slide deck (not an article) -> we can't analyze it
-                if 'slide deck' in paragraphs[0]:
-                    return 'invalid'
+            #     # if its a slide deck (not an article) -> we can't analyze it
+            #     if 'slide deck' in paragraphs[0]:
+            #         return 'invalid'
 
-                # find the analysts and execs
-                analystIdx = 0
-                operatorIdx = 0
-                for i, p in enumerate(paragraphs):
-                    if p == 'Analysts':
-                        analystIdx = i
-                    if p == 'Operator':
-                        operatorIdx = i
-                        break
-                execs = paragraphs[2:analystIdx]
-                analysts = paragraphs[analystIdx+1:operatorIdx]
+            #     # find the analysts and execs
+            #     analystIdx = 0
+            #     operatorIdx = 0
+            #     for i, p in enumerate(paragraphs):
+            #         if p == 'Analysts':
+            #             analystIdx = i
+            #         if p == 'Operator':
+            #             operatorIdx = i
+            #             break
+            #     execs = paragraphs[2:analystIdx]
+            #     analysts = paragraphs[analystIdx+1:operatorIdx]
 
-                people = ['Operator'] + execs + analysts
-                wordCount = {}
-                for p in people:
-                    wordCount[p] = 0
+            #     people = ['Operator'] + execs + analysts
+            #     wordCount = {}
+            #     for p in people:
+            #         wordCount[p] = 0
 
-                for i, line in enumerate(paragraphs[operatorIdx:]):
-                    for p in people:
-                        if line in p:
-                            wordCount[p] += len(paragraphs[i+1].split())
-                            break
+            #     for i, line in enumerate(paragraphs[operatorIdx:]):
+            #         for p in people:
+            #             if line in p:
+            #                 wordCount[p] += len(paragraphs[i+1].split())
+            #                 break
 
-                return { "text": paragraphs, "execs": execs, "analysts": analysts, "wordsPerPerson": wordCount}
-            else:
-                return None
+            #     return { "text": paragraphs, "execs": execs, "analysts": analysts, "wordsPerPerson": wordCount}
+            # else:
+            #     return None
 
         except Exception as e:
             print("Failed to process the request, Exception: %s" % (e))

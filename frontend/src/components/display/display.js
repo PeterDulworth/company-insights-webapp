@@ -64,7 +64,7 @@ class Display extends Component {
             const json = await response.json();
             console.log(JSON.stringify(json));
             
-            if (json.status === 404) this.setState({ validCalls: false, companyCalls: json.calls, callsLoaded: true })
+            if (json.status === 404 || !response.ok) this.setState({ validCalls: false, companyCalls: json.calls, callsLoaded: true })
             else this.setState({validCalls: true, companyCalls: json.calls, callsLoaded: true})
             
         } catch(e) {

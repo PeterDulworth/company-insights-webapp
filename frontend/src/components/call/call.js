@@ -14,7 +14,10 @@ class Call extends Component {
 
     render() {
         if (this.state.analysisRedirect) {
-            return <Redirect to={'analysis' + this.props.path} />;
+            return <Redirect to={{
+                    pathname: 'analysis' + this.props.path,
+                    state: { title: this.props.name }
+                }} />;
         }
         
         return (

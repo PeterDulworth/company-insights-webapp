@@ -47,5 +47,5 @@ def getProxy():
         {'http':'204.152.206.37:5836'},
     ]
 
-    # return random.choice(usProxies)
-    return proxies
+    return random.choice(usProxies)
+    # return proxies
