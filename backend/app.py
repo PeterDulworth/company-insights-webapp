@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, abort
 from scraper import *
 
 app = Flask(__name__)
@@ -48,7 +48,20 @@ def getSymbolEarningsCalls(symbol):
     
     response = jsonify(calls=calls, status=200)
     response.headers.add('Access-Control-Allow-Origin', '*')
-    # print(calls)
+    return response
+
+# e.g. curl -i http://localhost:5000/call/4144365-tesla-tsla-q4-2017-results-earnings-call-transcript
+@app.route('/call/<string:callURL>')
+def getCall(callURL):
+    call = scrapeCall(callURL)
+    
+    if (call == None):
+        response = jsonify(status=404)
+        response.headers.add('Access-Control-Allow-Origin', '*')    
+        return response
+    
+    response = jsonify(call=call, status=200)
+    response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
 if __name__ == "__main__":
