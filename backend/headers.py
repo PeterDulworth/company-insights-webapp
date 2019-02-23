@@ -35,8 +35,9 @@ def getHeaders(siteEnum):
     } 
 
 def getProxy():
-    proxies = {'http':'200.136.52.103:80'}
-    # proxies = {'https':'118.174.233.80:32830'}
+    proxies = {'http':'96.47.238.50:443'} # blazin
+    # proxies = {'http':'200.136.52.103:80'} # faster
+    # proxies = {'https':'118.174.233.80:32830'} # slow??
     prox = [
         {'http': '45.70.0.223:8080'},
         {'http': '200.255.122.174:8080'},
