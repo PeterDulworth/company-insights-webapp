@@ -2,31 +2,40 @@
 #### Built by Peter Dulworth for Nesh
 
 ### Installation
-Note: I developed this application for Google Chrome. Most testing has been done with Chrome 72.0.3626.109.
 
-### Running
-#### Front End
+#### 1. Clone the repo
+Clone the repo or download the zip.
+#### 2. Install frontend dependencies
 ```bash
+cd frontend
 npm install
 ```
+#### 3. Install backend dependencies
+```bash
+pip install -r requirements.txt
+```
+
+Note: I developed this application for Google Chrome. Most testing has been done with Chrome 72.0.3626.109.
+
+### Running the app
+#### Front End
 ```bash
 npm start
 ```
+The website will now be live at: http://localhost:3000/
+For the website to be functional, you must also start the backend (next step).
 
 #### Back End
 ```bash
-python app.py
+python backend/app.py
 ```
+The API will now be live at http://localhost:5000
 
-This will launch the backend at http://localhost:5000
-
-To test calls to the backend without the front-end you can open
-terminal and run.
+To test calls to the backend without the front-end you can open terminal and run.
 
 ```
 curl -i http://localhost:5000/symbol/oxy
 ```
-`oxy` can be substituted for any symbol.
 
 ### Features
 
