@@ -8,6 +8,7 @@ This file contains various methods for scraping data from nasdaq.com and seeking
 from bs4 import BeautifulSoup
 import requests
 import re
+import time
 # from login import loginSA
 from headers import *
 
@@ -82,6 +83,7 @@ def scrapeNasdaqSymbol(symbol):
             print("Failed to process the request, Exception:%s"%(e))
 
 def scrapeNasdaqHeadlines(symbol):
+    time.sleep(1)
     url = 'https://www.nasdaq.com/symbol/%s/news-headlines' % (symbol)
     tag = "HEADLINES"
     log(url, tag=tag)
@@ -111,6 +113,7 @@ def scrapeNasdaqHeadlines(symbol):
             print("Failed to process the request, Exception:%s"%(e))
 
 def scrapeSeekingAlphaEarningsCalls(symbol):
+    time.sleep(1)
     url = 'http://seekingalpha.com/symbol/%s/earnings/transcripts' % (symbol)
     tag = "EARNINGS CALLS"
     log(url, tag=tag)
@@ -160,38 +163,41 @@ def scrapeCall(callPath):
             # find the operator
             # use these names to find the text spoken by each person
             # detect if the call is a slide deck: "The following slide deck"
+            body = soupPage.find_all("div", {"id":"a-body"})
+            if body:
+                body = body[0].text
+                paragraphs = body.split("\n")
+                
+                # if its a slide deck (not an article) -> we can't analyze it
+                if 'slide deck' in paragraphs[0]:
+                    return 'invalid'
 
-            extracts = []
-            keywords = ['Analysis']
-            bodyAll = soupPage.find_all("div", {"id":"a-body"})
-            if bodyAll:
-                bodyAll = bodyAll[0].text
-                body = bodyAll.split("\n")
-                for p in body:
-                    print(p)
-                    if any(keyword in p for keyword in keywords):
-                        extracts.append({
-                                        # "title": title,
-                                        # "date": date,
-                                        # "time": time, 
-                                        "bodyContent": p
-                                        })
+                # find the analysts and execs
+                analystIdx = 0
+                operatorIdx = 0
+                for i, p in enumerate(paragraphs):
+                    if p == 'Analysts':
+                        analystIdx = i
+                    if p == 'Operator':
+                        operatorIdx = i
+                        break
+                execs = paragraphs[2:analystIdx]
+                analysts = paragraphs[analystIdx+1:operatorIdx]
 
-                return extracts
-            # find the article itself
-            article = soupPage.find('article')
-            a = article.find('div', id="a-cont", recursive=False)
-            paragraphs = list(a.find_all('p'))
-            for p in paragraphs:
-                print (p.text)
-            log("ARTICLE OK", tag=tag)
-            
-            # find the executives and analysts
-            executives = a.find_all(lambda tag: tag.name == 'p' and tag.text == 'Executives')[0]
-            analysts = a.find_all(lambda tag: tag.name == 'p' and tag.text == 'Analysts')[0]
-            log("EXECUTIVES + ANALYSTS OK", tag=tag)
+                people = ['Operator'] + execs + analysts
+                wordCount = {}
+                for p in people:
+                    wordCount[p] = 0
 
-            return {}
+                for i, line in enumerate(paragraphs[operatorIdx:]):
+                    for p in people:
+                        if line in p:
+                            wordCount[p] += len(paragraphs[i+1].split())
+                            break
+
+                return { "text": paragraphs, "execs": execs, "analysts": analysts, "wordsPerPerson": wordCount}
+            else:
+                return None
 
         except Exception as e:
             print("Failed to process the request, Exception: %s" % (e))
