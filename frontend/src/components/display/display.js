@@ -12,45 +12,59 @@ class Display extends Component {
         super(props);
         this.state = { 
             companyData: null,
-            validResponse: true,
-            dataLoaded: false,
             companyArticles: null,
-            validArticles: true,
-            articlesLoaded: false,
             companyCalls: null,
+
+            validData: true,
+            validArticles: true,
             validCalls: true,
+
+            dataLoaded: false,
+            articlesLoaded: false,
             callsLoaded: false,
         };
     }
 
     async fetchCompanyData(url) {
-        const response = await fetch(url);
-        const json = await response.json();
-        console.log(JSON.stringify(json));
-        if (json.status === 404) {
-            this.setState({validResponse: false})
+        try {
+            const response = await fetch(url);
+            const json = await response.json();
+            console.log(JSON.stringify(json));
+            if (json.status === 404) {
+                this.setState({validData: false})
+            }
+            this.setState({ companyData: json.company, dataLoaded: true });
+        } catch(e) {
+            console.log('Error fetching company data!', e);
         }
-        this.setState({ companyData: json.company, dataLoaded: true });
     }
 
     async fetchArticles(url) {
-        const response = await fetch(url);
-        const json = await response.json();
-        console.log(JSON.stringify(json));
-        if (json.status === 404) {
-            this.setState({validArticles: false})
+        try {
+            const response = await fetch(url);
+            const json = await response.json();
+            console.log(JSON.stringify(json));
+            if (json.status === 404) {
+                this.setState({validArticles: false})
+            }
+            this.setState({ companyArticles: json.articles, articlesLoaded: true });
+        } catch(e) {
+            console.log('Error fetching company news articles!', e);
         }
-        this.setState({ companyArticles: json.articles, articlesLoaded: true });
     }
 
     async fetchCalls(url) {
-        const response = await fetch(url);
-        const json = await response.json();
-        console.log(JSON.stringify(json));
-        if (json.status === 404) {
-            this.setState({validCalls: false})
+        try {
+            const response = await fetch(url);
+            const json = await response.json();
+            console.log(JSON.stringify(json));
+            if (json.status === 404) {
+                this.setState({validCalls: false})
+            }
+            this.setState({ companyCalls: json.calls, callsLoaded: true });
+        } catch(e) {
+            console.log('Error fetching earnings calls!', e);
         }
-        this.setState({ companyCalls: json.calls, callsLoaded: true });
     }
 
     componentDidMount() {
@@ -64,6 +78,10 @@ class Display extends Component {
         this.fetchCalls(url);
     }
 
+    componentWillUnmount() {
+
+    }
+
     render() {
         const errURL = this.props.symbol + '/error';
         const queryRedirect = <Redirect to={errURL} />;
@@ -71,61 +89,70 @@ class Display extends Component {
         const articles = this.state.companyArticles;
         const calls = this.state.companyCalls;
 
+        let displayData = null;
+        // if the data is loaded and valid
+        if (this.state.dataLoaded && this.state.validData) {
+            displayData = <>
+                <NavBar title={d.name}/>
+                <div className={styles.spacer}></div>
+                <Card title="Quick Overview" dir={d.netChangeDir} data={{
+                    "Price": d.price, 
+                    "Net Change": d.netChange, 
+                    "Percent Change": d.percentChange,
+                    }}/>
+                <Card split={<hr/>} title="Company SEC Description" text={d.about}/>
+                <Card title="Financial Numbers" data={d.keyStockData}/></>;
+        } 
+        // if the data is loaded and invalid
+        else if (this.state.dataLoaded && !this.state.validData) {
+            displayData = queryRedirect;
+        } 
+        // if the data is not yet loaded
+        else {
+            displayData = <div className={styles.loadingWrapper}><h1>loading...</h1></div>
+        }
+
+        let displayArticles = null;
+        // if the data is loaded and valid
+        if (this.state.articlesLoaded && this.state.validArticles) {
+            displayArticles = <>
+                <Card title="Articles" />
+                <div className={styles.articleWrapper}>
+                    {articles.map(a => (<Article key={a.name} name={a.name} link={a.link} date={a.date} author={a.author}/>))}
+                </div></>;
+        } 
+        // if the data is loaded and invalid
+        else if (this.state.articlesLoaded && !this.state.validArticles) {
+            displayArticles = <div className={styles.loadingWrapper}><h1>error loading articles...</h1></div>;
+        } 
+        // if the data is not yet loaded
+        else {
+            displayArticles = <div className={styles.loadingWrapper}><h1>loading articles...</h1></div>;
+        }
+
+        let displayCalls = null;
+        // if the data is loaded and valid
+        if (this.state.callsLoaded && this.state.validCalls) {
+            displayCalls = <>
+                <Card title="Earnings Calls" />
+                <div className={styles.callsWrapper}>
+                    {calls.map(c => (<Call key={c.name} name={c.name} link={c.link} date={c.date} />))}
+                </div></>;
+        } 
+        // if the data is loaded and invalid
+        else if (this.state.callsLoaded && !this.state.validCalls) {
+            displayCalls = <div className={styles.loadingWrapper}><h1>error loading calls...</h1></div>;
+        } 
+        // if the data is not yet loaded
+        else {
+            displayCalls = <div className={styles.loadingWrapper}><h1>loading calls...</h1></div>;
+        }
+
         return (
             <div className={styles.displayWrapper}>
-            {this.state.dataLoaded ? 
-                (this.state.validResponse ? 
-                    <>
-                        <NavBar title={d.name}/>
-                        <div className={styles.spacer}></div>
-                        <Card title="Quick Overview" dir={d.netChangeDir} data={{
-                            "Price": d.price, 
-                            "Net Change": d.netChange, 
-                            "Percent Change": d.percentChange,
-                            }}/>
-                        <Card split={<hr/>} title="Company SEC Description" text={d.about}/>
-                        <Card title="Financial Numbers" data={d.keyStockData}/>
-                    </>
-                    :
-                    queryRedirect) : 
-                <div className={styles.loadingWrapper}>
-                    <h1>loading...</h1>
-                </div>
-            }
-            {this.state.articlesLoaded ? 
-                (this.state.validArticles ? 
-                    <>
-                        <Card title="Articles" />
-                        <div className={styles.articleWrapper}>
-                            {articles.map(a => (<Article key={a.name} name={a.name} link={a.link} date={a.date} author={a.author}/>))}
-                        </div>
-                    </>
-                    :
-                    <div className={styles.loadingWrapper}>
-                        <h1>error loading articles...</h1>
-                    </div>
-                    ) : 
-                <div className={styles.loadingWrapper}>
-                    <h1>loading articles...</h1>
-                </div>
-            }
-            {this.state.callsLoaded ? 
-                (this.state.validCalls ? 
-                    <>
-                        <Card title="Earnings Calls" />
-                        <div className={styles.callsWrapper}>
-                            {calls.map(c => (<Call key={c.name} name={c.name} link={c.link} date={c.date} />))}
-                        </div>
-                    </>
-                    :
-                    <div className={styles.loadingWrapper}>
-                        <h1>error loading calls...</h1>
-                    </div>
-                    ) : 
-                <div className={styles.loadingWrapper}>
-                    <h1>loading calls...</h1>
-                </div>
-            }
+                {displayData}
+                {displayArticles}
+                {displayCalls}
             </div>
         );
     }

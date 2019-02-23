@@ -1,35 +1,15 @@
+"""
+Author: Peter DUlworth
+Date: 02/22/2019
+
+This file contains various methods for scraping data from nasdaq.com and seekingalpha.com.
+"""
+
 from bs4 import BeautifulSoup
 import requests
 import re
-import time
-import random
-
-baseUrl = 'https://www.nasdaq.com/symbol/'
-headers = {
-    "Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
-    "Accept-Encoding":"gzip, deflate",
-    "Accept-Language":"en-GB,en;q=0.9,en-US;q=0.8,ml;q=0.7",
-    "Connection":"keep-alive",
-    "Host":"www.nasdaq.com",
-    "Referer":"http://www.nasdaq.com",
-    "Upgrade-Insecure-Requests":"1",
-    "User-Agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.119 Safari/537.36"
-}
-proxies = {'http':'200.136.52.103:80'}
-
-def getProxy():
-    prox = [
-        {'http': '45.70.0.223:8080'},
-        {'http': '200.255.122.174:8080'},
-        {'http': '178.128.127.238:8080'},
-        {'http': '206.189.46.32:8080'},
-        {'http': '185.146.112.142:8080'},
-        {'http': '178.62.39.65:8080'},
-        {'http': '190.14.229.196:8080'},
-        {'http': '159.16.106.110:80'},
-        {'http': '154.83.10.94:80'},
-    ]
-    return random.choice(prox)
+# from login import loginSA
+from headers import *
 
 def log(msg, tag="ALERT"):
     print("[" + tag + "] " + msg)
@@ -42,15 +22,14 @@ def ifNotNull(query):
 
 def scrapeNasdaqSymbol(symbol):
     d = {}
-    url = baseUrl + str(symbol)
+    url = 'https://www.nasdaq.com/symbol/%s' % (symbol)
     log(url, tag="DATA")
 
     # Retrying for failed request
     for retries in range(3):
         try:
             # make the request
-            # response = requests.get(url, headers=headers, proxies=proxies, verify=False)
-            response = requests.get(url, headers=headers, proxies=proxies)
+            response = requests.get(url, headers=getHeaders(Site.NASDAQ), proxies=getProxy()) # verify=False
 
             # if there is an error with the request, try again
             if response.status_code != 200:
@@ -103,9 +82,7 @@ def scrapeNasdaqSymbol(symbol):
             print("Failed to process the request, Exception:%s"%(e))
 
 def scrapeNasdaqHeadlines(symbol):
-    # time.sleep(5)
-    d = {}
-    url = baseUrl + str(symbol) + '/news-headlines'
+    url = 'https://www.nasdaq.com/symbol/%s/news-headlines' % (symbol)
     tag = "HEADLINES"
     log(url, tag=tag)
 
@@ -113,7 +90,7 @@ def scrapeNasdaqHeadlines(symbol):
     for retries in range(3):
         try:
             # make the request
-            response = requests.get(url, headers=headers, proxies=proxies)
+            response = requests.get(url, headers=getHeaders(Site.NASDAQ), proxies=getProxy())
 
             # if there is an error with the request, try again
             if response.status_code != 200:
@@ -134,9 +111,7 @@ def scrapeNasdaqHeadlines(symbol):
             print("Failed to process the request, Exception:%s"%(e))
 
 def scrapeSeekingAlphaEarningsCalls(symbol):
-    # time.sleep(10)
-    d = {}
-    url = 'https://seekingalpha.com/symbol/' + str(symbol) + '/earnings/transcripts'
+    url = 'http://seekingalpha.com/symbol/%s/earnings/transcripts' % (symbol)
     tag = "EARNINGS CALLS"
     log(url, tag=tag)
 
@@ -144,8 +119,7 @@ def scrapeSeekingAlphaEarningsCalls(symbol):
     for retries in range(3):
         try:
             # make the request
-            p = getProxy()
-            response = requests.get(url, headers={"Referer": "https://seekingalpha.com/", "User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36"}, proxies=p)
+            response = requests.get(url, headers=getHeaders(Site.SA), proxies=getProxy())
             
             # if there is an error with the request, try again
             if response.status_code != 200:
@@ -164,9 +138,7 @@ def scrapeSeekingAlphaEarningsCalls(symbol):
             print("Failed to process the request, Exception: %s" %(e))
 
 def scrapeCall(callPath):
-    # time.sleep(10)
-    d = {}
-    url = 'https://seekingalpha.com/article/' + str(callPath) + '?part=single'
+    url = 'https://seekingalpha.com/article/%s?part=single' % (callPath)
     tag = "CALL ANALYSIS"
     log(url, tag=tag)
 
@@ -174,8 +146,10 @@ def scrapeCall(callPath):
     for retries in range(3):
         try:
             # make the request
-            response = requests.get(url, headers={"Referer": "https://seekingalpha.com/", "User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36"}, proxies=getProxy())
+            response = requests.get(url, headers=getHeaders(Site.SA), proxies=getProxy())
             
+            print(response.text)
+
             # if there is an error with the request, try again
             if response.status_code != 200:
                 raise ValueError("Invalid Response Received From Server!")
@@ -205,4 +179,8 @@ def scrapeCall(callPath):
             return {}
 
         except Exception as e:
-            print("Failed to process the request, Exception: %s" %(e))
+            print("Failed to process the request, Exception: %s" % (e))
+
+def test():
+    return requests.get('https://seekingalpha.com/symbol/AMAT/earnings', headers=getHeaders(Site.SA), proxies=getProxy()).text
+    # return requests.get('https://seekingalpha.com/symbol/AMAT/earnings', proxies={'https':'50.232.162.77:80'}).text
