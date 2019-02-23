@@ -9,7 +9,6 @@ from bs4 import BeautifulSoup
 import requests
 import re
 import time
-# from login import loginSA
 from headers import *
 
 def log(msg, tag="ALERT"):
@@ -135,7 +134,7 @@ def scrapeSeekingAlphaEarningsCalls(symbol):
             log("TABLE OK", tag=tag)
             calls = table.find_all("div", {"class":"symbol_article"});
             log("EARNINGS CALLS OK", tag=tag)
-            return list(map(lambda call: {'name': call.a.text, 'link': 'https://seekingalpha.com' + call.a['href'] + '?part=single', 'date': call.div.find(text=True, recursive=False)}, calls))
+            return list(map(lambda call: {'name': call.a.text, 'link': 'https://seekingalpha.com' + call.a['href'] + '?part=single', 'path': call.a['href'], 'date': call.div.find(text=True, recursive=False)}, calls))
 
         except Exception as e:
             print("Failed to process the request, Exception: %s" %(e))
