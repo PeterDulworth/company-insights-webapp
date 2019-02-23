@@ -5,7 +5,19 @@ app = Flask(__name__)
     
 @app.route('/')
 def index():
-    return '<h1>Welcome to Company Insights API!</h1>Checkout the project on <a href="https://github.com/PeterDulworth/nesh-company-insights">github!</a>'
+    page = [
+        '<h1>Welcome to Company Insights API!</h1>',
+        'Checkout the project on <a href="https://github.com/PeterDulworth/nesh-company-insights">github!</a>',
+        '<br/><br/>',
+        '<strong>Endpoints:</strong>',
+        '<ul>',
+            '<li>/symbol/&lt;string:symbol&gt;</li>',
+            '<li>/symbol/headlines/&lt;string:symbol&gt;</li>',
+            '<li>/symbol/earnings/calls/&lt;string:symbol&gt;</li>',
+            '<li>/call/&lt;string:callURL&gt;</li>',
+        '</ul>',
+        ]
+    return ''.join(page)
 
 # e.g. http://localhost:5000/symbol/OXY
 @app.route('/symbol/<string:symbol>')
