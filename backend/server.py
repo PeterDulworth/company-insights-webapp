@@ -1,10 +1,15 @@
 """
-"""
+Author: Peter DUlworth
+Date: 02/22/2019
 
+Main entry point for the program. Flask API supporting several endpoints for web scraping.
+"""
 from flask import Flask, jsonify, abort
 from scraper import *
+from headers import *
 
 app = Flask(__name__)
+proxies = getProxy()
     
 @app.route('/')
 def index():
@@ -22,10 +27,25 @@ def index():
         ]
     return ''.join(page)
 
+# e.g. curl -i http://localhost:5000/proxy
+@app.route('/proxy')
+def proxy():
+    response = jsonify(proxies=proxies)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
+@app.route('/changeProxy')
+def changeProxy():
+    global proxies
+    proxies = getProxy()
+    response = jsonify(proxies=proxies)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
 # e.g. http://localhost:5000/symbol/OXY
 @app.route('/symbol/<string:symbol>')
 def getSymbol(symbol):
-    scrapedData = scrapeNasdaqSymbol(symbol)
+    scrapedData = scrapeNasdaqSymbol(symbol, proxies)
     
     if (scrapedData == None):
         response = jsonify(status=404)
@@ -39,7 +59,7 @@ def getSymbol(symbol):
 # e.g. http://localhost:5000/symbol/headlines/OXY
 @app.route('/symbol/headlines/<string:symbol>')
 def getSymbolHeadlines(symbol):
-    headlines = scrapeNasdaqHeadlines(symbol)
+    headlines = scrapeNasdaqHeadlines(symbol, proxies)
     
     if (headlines == None):
         response = jsonify(status=404)
@@ -54,7 +74,7 @@ def getSymbolHeadlines(symbol):
 # test: curl -i http://localhost:5000/symbol/earnings/calls/aapl
 @app.route('/symbol/earnings/calls/<string:symbol>')
 def getSymbolEarningsCalls(symbol):
-    calls = scrapeSeekingAlphaEarningsCalls(symbol)
+    calls = scrapeSeekingAlphaEarningsCalls(symbol, proxies)
     
     if (calls == None):
         response = jsonify(status=404)
@@ -67,7 +87,7 @@ def getSymbolEarningsCalls(symbol):
 
 # e.g. curl -i http://localhost:5000/call/4144365-tesla-tsla-q4-2017-results-earnings-call-transcript
 @app.route('/call/<string:callURL>')
-def getCall(callURL):
+def getCall(callURL, proxies):
     call = scrapeCall(callURL)
     
     if (call == None):

@@ -17,11 +17,18 @@ def getFreeProxies():
     response = requests.get(url)
     parser = fromstring(response.text)
     proxies = set()
-    for i in parser.xpath('//tbody/tr')[:200]:
-        if i.xpath('.//td[7][contains(text(),"yes")]') and i.xpath('.//td[3][contains(text(),"US")]'):
-            #Grabbing IP and corresponding PORT
-            proxy = ":".join([i.xpath('.//td[1]/text()')[0], i.xpath('.//td[2]/text()')[0]])
-            proxies.add(proxy)
+
+    # look at 400 rows of the proxy table
+    for i in parser.xpath('//tbody/tr')[:400]:
+        # if the proxy support HTTPS
+        if i.xpath('.//td[7][contains(text(),"yes")]'):
+            # if the proxy is in the US, CA, MX
+            if i.xpath('.//td[3][contains(text(),"US")]') or i.xpath('.//td[3][contains(text(),"CA")]') or i.xpath('.//td[3][contains(text(),"MX")]'):
+                # save the proxy to our list
+                proxy = ":".join([i.xpath('.//td[1]/text()')[0], i.xpath('.//td[2]/text()')[0]])
+                proxies.add(proxy)
+
+    print ("Possible Proxies: ", proxies)
     return proxies
 
 userAgents = [
@@ -57,35 +64,54 @@ class Site(Enum):
     SA = 1
     NASDAQ = 2
 
-# def getProxy():
-    # proxies = {'http':'96.47.238.50:443'} 
-    # return proxies
-
 def getValidProxies():
     proxies = getFreeProxies()
+    
+    # if there we couldn't find any free proxies, well bummer just return an empty set
+    if not proxies:
+        return []
+
     proxy_pool = cycle(proxies)
     validProxies = set()
+    atLeastOneValid = False
 
     url = 'https://httpbin.org/ip'
-    for i in range(1, len(proxies) + 1):
+    i = 0
+    # test at most three proxies (but keep testing if we haven't found a valid one yet)
+    while (i < min(len(proxies), 3) or not atLeastOneValid):
+        if i >= len(proxies):
+            return list(validProxies)
+
         #Get a proxy from the pool
         proxy = next(proxy_pool)
         print("\nRequest #%d using %s" % (i, proxy))
         try:
             response = requests.get(url, proxies={"http": proxy, "https": proxy})
-            print(response.json())
             validProxies.add(proxy)
+            atLeastOneValid = True
+            print(response.json())
             
         except:
             # Most free proxies will often get connection errors. You will have retry the entire request using another proxy to work. 
             # We will just skip retries as its beyond the scope of this tutorial and we are only downloading a single url 
             print("Skipping. Connnection error")
+        
+        i += 1
 
+    print ("Valid Proxies: ", list(validProxies))
     return list(validProxies)
 
 def getProxy():
-    validProxy = random.choice(getValidProxies())
-    return { "http": validProxy, "https": validProxy }
+    proxies = {'http':'96.47.238.50:443'} 
+    validProxies = getValidProxies()
+    
+    if validProxies:
+        validProxy = random.choice(validProxies)
+        print ("Chosen Proxy: ", validProxy)
+        return { "http": validProxy }
+
+    else:
+        return {}
 
 def getHeaders(siteEnum):
     
