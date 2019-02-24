@@ -105,7 +105,7 @@ class Display extends Component {
         // if the data is loaded and valid
         if (this.state.dataLoaded && this.state.validData) {
             displayData = <>
-                <NavBar title={data.name}/>
+                <NavBar title={data.name} backLink="/" backLinkName="back to search page" />
                 <div className={styles.spacer}></div>
                 <Card title="Quick Overview" dir={data.netChangeDir} data={{
                     "Price": data.price, 
@@ -148,7 +148,7 @@ class Display extends Component {
             displayCalls = <>
                 <Card title="Earnings Calls" />
                 <div className={styles.callsWrapper}>
-                    {calls.map(c => (<Call key={c.name} name={c.name} link={c.link} path={c.path} date={c.date} />))}
+                    {calls.map(c => (<Call key={c.name} name={c.name} link={c.link} path={c.path} date={c.date} symbol={this.props.symbol} />))}
                 </div></>;
         } 
         // if the data is loaded and invalid

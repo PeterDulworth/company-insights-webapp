@@ -12,7 +12,7 @@ class Nav extends React.Component {
           </b>
         </div>
         <span className={styles.gradText}>
-          <Link to="/" className={[styles.gradText, styles.az].join(' ')}>back to search page</Link>
+          <Link to={this.props.backLink} className={[styles.gradText, styles.az].join(' ')}>{this.props.backLinkName}</Link>
         </span>
       </nav>
     );

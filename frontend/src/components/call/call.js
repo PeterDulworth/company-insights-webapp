@@ -16,7 +16,7 @@ class Call extends Component {
         if (this.state.analysisRedirect) {
             return <Redirect to={{
                     pathname: 'analysis' + this.props.path,
-                    state: { title: this.props.name }
+                    state: { title: this.props.name, symbol: this.props.symbol }
                 }} />;
         }
         

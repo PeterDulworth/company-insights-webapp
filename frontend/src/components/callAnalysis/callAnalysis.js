@@ -91,7 +91,7 @@ class CallAnalysis extends Component {
 
         return (
             <>
-                <NavBar title={callTitle}/>
+                <NavBar title={callTitle} backLink={this.props.location.state.symbol} backLinkName={"back to " + this.props.location.state.symbol.substring(1)}/>
                 {displayData}
             </>
         );
