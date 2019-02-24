@@ -175,9 +175,6 @@ def scrapeCall(callPath):
                         if (p.strong.span['class'][0] == 'answer'):
                             answers.append(p.strong.span.text)
 
-            for p in questions + answers:
-                print(type(p))
-
             d = {}
             for p in questions + answers:
                 if p not in d:

@@ -40,9 +40,8 @@ class CallAnalysis extends Component {
     }
 
     componentDidMount() {
-        // this.fetchCallAnalysis();
-        this.useDummyData();
-        console.log(dummyAnalysisData);
+        this.fetchCallAnalysis();
+        // this.useDummyData();
     }
 
     componentWillUnmount() {

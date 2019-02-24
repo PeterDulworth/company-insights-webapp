@@ -36,7 +36,7 @@ def getSymbol(symbol):
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
-# e.g. http://localhost:5000/symbol/news-headlines/OXY
+# e.g. http://localhost:5000/symbol/headlines/OXY
 @app.route('/symbol/headlines/<string:symbol>')
 def getSymbolHeadlines(symbol):
     headlines = scrapeNasdaqHeadlines(symbol)
