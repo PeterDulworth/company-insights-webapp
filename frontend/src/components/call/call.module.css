@@ -8,6 +8,10 @@
     overflow-wrap: break-word;
 }
 
+.wrapper:hover {
+    transform: scale(1.03);
+}
+
 .gray {
     color: gray;
 }

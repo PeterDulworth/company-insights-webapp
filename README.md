@@ -20,12 +20,7 @@ Note: I developed this application for Google Chrome. Most testing has been done
 Note: This application uses python 3.7.
 
 ### Running the app
-#### Front End
-```bash
-npm start
-```
-The website will now be live at: http://localhost:3000/
-For the website to be functional, you must also start the backend (next step).
+First start the backend, then start the front end:
 
 #### Back End
 ```bash
@@ -38,6 +33,14 @@ To test calls to the backend without the front-end you can open terminal and run
 ```
 curl -i http://localhost:5000/symbol/oxy
 ```
+
+
+#### Front End
+```bash
+cd frontend
+npm start
+```
+The website will now be live at: http://localhost:3000/
 
 ### Features
 

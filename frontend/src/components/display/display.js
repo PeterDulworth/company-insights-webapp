@@ -88,16 +88,12 @@ class Display extends Component {
     }
 
     componentDidMount() {
-        this.useDummyCompanyData();
-        this.useDummyArticlesData();
-        this.useDummyCallData();
-        // this.fetchCompanyData();
-        // this.fetchArticles();
-        // this.fetchCalls();
-    }
-
-    componentWillUnmount() {
-
+        // this.useDummyCompanyData();
+        // this.useDummyArticlesData();
+        // this.useDummyCallData();
+        this.fetchCompanyData();
+        this.fetchArticles();
+        this.fetchCalls();
     }
 
     render() {
@@ -134,7 +130,7 @@ class Display extends Component {
             displayArticles = <>
                 <Card title="Articles" />
                 <div className={styles.articleWrapper}>
-                    {articles.map(a => (<Article key={a.name} name={a.name} link={a.link} date={a.date} author={a.author}/>))}
+                    {articles.map(a => (<Article key={a.link + a.date} name={a.name} link={a.link} date={a.date} author={a.author}/>))}
                 </div></>;
         } 
         // if the data is loaded and invalid

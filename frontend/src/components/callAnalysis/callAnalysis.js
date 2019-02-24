@@ -64,7 +64,7 @@ class CallAnalysis extends Component {
             );
             displayData =
              <div className={styles.wrapper}>
-                <Card split={<hr/>} title="Participants"><div className={styles.personContainer}>{data.participants.map(p => <Person name={p} />)}</div></Card>
+                <Card split={<hr/>} title="Participants"><div className={styles.personContainer}>{data.participants.map(p => <Person key={p} name={p} />)}</div></Card>
                 <Card title="Call Analysis" ><br/>
                     <Table hover>
                         <thead>
@@ -77,7 +77,7 @@ class CallAnalysis extends Component {
                         <tbody>{rows}</tbody>
                     </Table>
                 </Card>
-                <Card split={<hr/>} title="Call Transcript"><div className={styles.alignLeft}>{data.text.map(p => <p>{p}</p>)}</div></Card>
+                <Card split={<hr/>} title="Call Transcript"><div className={styles.alignLeft}>{data.text.map((p, i) => <p key={i}>{p}</p>)}</div></Card>
             </div>
         } 
         // if the data is loaded and invalid

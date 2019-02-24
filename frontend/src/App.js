@@ -5,7 +5,7 @@ import CallAnalysis from "./components/callAnalysis/callAnalysis"
 import style from "./App.module.css";
 import { Route, Switch, Link } from "react-router-dom";
 
-class App extends Component {
+class App extends Component {  
   render() {
     return (
       <div className={style.app}>

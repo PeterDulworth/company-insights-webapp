@@ -37,6 +37,7 @@
     width: 50vw;
     min-width: 500px;
     overflow: hidden;
+    padding-top: 10px;
 }
 
 .articleWrapper > * {
@@ -45,6 +46,7 @@
 }
 
 .callsWrapper {
+    padding-top: 10px;
     display: flex;
     flex-direction: row;
     align-items: flex-start;

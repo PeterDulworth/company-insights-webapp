@@ -9,8 +9,8 @@ from scraper import *
 from headers import *
 
 app = Flask(__name__)
-proxies = getProxy()
-    
+proxies = {}
+
 @app.route('/')
 def index():
     page = [
@@ -35,7 +35,7 @@ def proxy():
     return response
 
 # change the global variable storing the proxy
-@app.route('/changeProxy')
+@app.route('/generate/proxy')
 def changeProxy():
     global proxies 
     proxies = getProxy()
@@ -88,7 +88,7 @@ def getSymbolEarningsCalls(symbol):
 
 # e.g. curl -i http://localhost:5000/call/4144365-tesla-tsla-q4-2017-results-earnings-call-transcript
 @app.route('/call/<string:callURL>')
-def getCall(callURL, proxies):
+def getCall(callURL):
     call = scrapeCall(callURL, proxies)
     
     if (call == None):
