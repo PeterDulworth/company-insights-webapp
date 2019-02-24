@@ -44,12 +44,8 @@ class CallAnalysis extends Component {
     }
 
     componentDidMount() {
-        // this.fetchCallAnalysis();
-        this.useDummyData();
-    }
-
-    componentWillUnmount() {
-
+        this.fetchCallAnalysis();
+        // this.useDummyData();
     }
 
     render() {
@@ -68,10 +64,15 @@ class CallAnalysis extends Component {
             );
             displayData =
              <div className={styles.wrapper}>
-                <Card split={<hr/>} title="Participants"><div className={styles.personContainer}>{data.participants.map(p => <Person key={p} name={p} />)}</div></Card>
+                <Card split={<hr/>} title="Participants">
+                    <div className={styles.personContainer}>{data.participants.map((p, i) => <Person key={i} name={p} />)}</div>
+                </Card>
+                
+                {console.log(data.tones)}
                 <Card split={<hr/>} title="Tone Analysis">
                     <div className={styles.tonesContainer}>{data.tones.map((t, i) => <Tone key={i} tone={t['tone_name']} score={t['score']} />)}</div>
                 </Card>
+                
                 <Card title="Participation Analysis" ><br/>
                     <Table hover>
                         <thead>
@@ -84,7 +85,10 @@ class CallAnalysis extends Component {
                         <tbody>{rows}</tbody>
                     </Table>
                 </Card>
-                <Card split={<hr/>} title="Call Transcript"><div className={styles.alignLeft}>{data.text.map((p, i) => <p key={i}>{p}</p>)}</div></Card>
+                
+                <Card split={<hr/>} title="Call Transcript">
+                    <div className={styles.alignLeft}>{data.text.map((p, i) => <p key={i}>{p}</p>)}</div>
+                </Card>
             </div>
         } 
         // if the data is loaded and invalid

@@ -1,6 +1,10 @@
 # Company Insight Utility
 #### Built by Peter Dulworth for Nesh
 
+### Submission Video
+
+Explanation video: https://www.youtube.com/watch?v=MOjehyxotzU&feature=youtu.be
+
 ### Installation
 
 #### 1. Clone the repo

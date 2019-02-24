@@ -88,12 +88,12 @@ class Display extends Component {
     }
 
     componentDidMount() {
-        this.useDummyCompanyData();
-        this.useDummyArticlesData();
-        this.useDummyCallData();
-        // this.fetchCompanyData();
-        // this.fetchArticles();
-        // this.fetchCalls();
+        // this.useDummyCompanyData();
+        // this.useDummyArticlesData();
+        // this.useDummyCallData();
+        this.fetchCompanyData();
+        this.fetchArticles();
+        this.fetchCalls();
     }
 
     render() {
