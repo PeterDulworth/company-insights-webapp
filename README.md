@@ -12,15 +12,15 @@ Explanation video: https://www.youtube.com/watch?v=MOjehyxotzU&feature=youtu.be
 
 ### Features
 
-- stock overview
+- **stock overview**
     - includes last stock price, net change in price in past day and percent change in price over past day
-- company description
+- **company description**
     - includes a brief description of the company (pulled from their SEC filing)
-- financial numbers
+- **financial numbers**
     - includes important financial numbers such PE, Market Cap, etc.
-- news articles
+- **news articles**
     - includes recently published news articles relating to the company
-- Analysis of Earnings Call Transcript 
+- **analysis of earnings call transcripts**
     - list of companies earnings calls including links transcripts and analysis
     - analysis includes:
         - call participants 
