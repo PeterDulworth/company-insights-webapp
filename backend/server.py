@@ -1,5 +1,5 @@
 """
-Author: Peter DUlworth
+Author: Peter Dulworth
 Date: 02/22/2019
 
 Main entry point for the program. Flask API supporting several endpoints for web scraping.
@@ -34,9 +34,10 @@ def proxy():
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
+# change the global variable storing the proxy
 @app.route('/changeProxy')
 def changeProxy():
-    global proxies
+    global proxies 
     proxies = getProxy()
     response = jsonify(proxies=proxies)
     response.headers.add('Access-Control-Allow-Origin', '*')
@@ -88,7 +89,7 @@ def getSymbolEarningsCalls(symbol):
 # e.g. curl -i http://localhost:5000/call/4144365-tesla-tsla-q4-2017-results-earnings-call-transcript
 @app.route('/call/<string:callURL>')
 def getCall(callURL, proxies):
-    call = scrapeCall(callURL)
+    call = scrapeCall(callURL, proxies)
     
     if (call == None):
         response = jsonify(status=404)
@@ -102,7 +103,7 @@ def getCall(callURL, proxies):
 # e.g. curl -i http://localhost:5000/call/4144365-tesla-tsla-q4-2017-results-earnings-call-transcript
 @app.route('/test')
 def tester():
-    response = jsonify(data=test(), status=200)
+    response = jsonify(data=test(proxies), status=200)
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 

@@ -20,7 +20,7 @@ def ifNotNull(query):
     else:
         return None
 
-def scrapeNasdaqSymbol(symbol):
+def scrapeNasdaqSymbol(symbol, proxies):
     d = {}
     url = 'https://www.nasdaq.com/symbol/%s' % (symbol)
     log(url, tag="DATA")
@@ -29,7 +29,7 @@ def scrapeNasdaqSymbol(symbol):
     for retries in range(3):
         try:
             # make the request
-            response = requests.get(url, headers=getHeaders(Site.NASDAQ), proxies=getProxy()) # verify=False
+            response = requests.get(url, headers=getHeaders(Site.NASDAQ), proxies=proxies) # verify=False
 
             # if there is an error with the request, try again
             if response.status_code != 200:
@@ -81,7 +81,7 @@ def scrapeNasdaqSymbol(symbol):
         except Exception as e:
             print("Failed to process the request, Exception:%s"%(e))
 
-def scrapeNasdaqHeadlines(symbol):
+def scrapeNasdaqHeadlines(symbol, proxies):
     time.sleep(1)
     url = 'https://www.nasdaq.com/symbol/%s/news-headlines' % (symbol)
     tag = "HEADLINES"
@@ -91,7 +91,7 @@ def scrapeNasdaqHeadlines(symbol):
     for retries in range(3):
         try:
             # make the request
-            response = requests.get(url, headers=getHeaders(Site.NASDAQ), proxies=getProxy())
+            response = requests.get(url, headers=getHeaders(Site.NASDAQ), proxies=proxies)
 
             # if there is an error with the request, try again
             if response.status_code != 200:
@@ -111,7 +111,7 @@ def scrapeNasdaqHeadlines(symbol):
         except Exception as e:
             print("Failed to process the request, Exception:%s"%(e))
 
-def scrapeSeekingAlphaEarningsCalls(symbol):
+def scrapeSeekingAlphaEarningsCalls(symbol, proxies):
     time.sleep(2)
     url = 'http://seekingalpha.com/symbol/%s/earnings/transcripts' % (symbol)
     tag = "EARNINGS CALLS"
@@ -121,7 +121,7 @@ def scrapeSeekingAlphaEarningsCalls(symbol):
     for retries in range(3):
         try:
             # make the request
-            response = requests.get(url, headers=getHeaders(Site.SA), proxies=getProxy())
+            response = requests.get(url, headers=getHeaders(Site.SA), proxies=proxies)
             
             # if there is an error with the request, try again
             if response.status_code != 200:
@@ -139,7 +139,7 @@ def scrapeSeekingAlphaEarningsCalls(symbol):
         except Exception as e:
             print("Failed to process the request, Exception: %s" %(e))
 
-def scrapeCall(callPath):
+def scrapeCall(callPath, proxies):
     url = 'https://seekingalpha.com/article/%s?part=single' % (callPath)
     tag = "CALL ANALYSIS"
     log(url, tag=tag)
@@ -148,7 +148,7 @@ def scrapeCall(callPath):
     for retries in range(3):
         try:
             # make the request
-            response = requests.get(url, headers=getHeaders(Site.SA), proxies=getProxy())
+            response = requests.get(url, headers=getHeaders(Site.SA), proxies=proxies)
             
             # if there is an error with the request, try again
             if response.status_code != 200:
@@ -236,6 +236,6 @@ def scrapeCall(callPath):
         except Exception as e:
             print("Failed to process the request, Exception: %s" % (e))
 
-def test():
-    return requests.get('https://seekingalpha.com/symbol/AMAT/earnings', headers=getHeaders(Site.SA), proxies=getProxy()).text
+def test(proxies):
+    return requests.get('https://seekingalpha.com/symbol/AMAT/earnings', headers=getHeaders(Site.SA), proxies=proxies).text
     # return requests.get('https://seekingalpha.com/symbol/AMAT/earnings', proxies={'https':'50.232.162.77:80'}).text
