@@ -422,6 +422,23 @@ export default {
       "Thanks, guys.", 
       "Operator", 
       "Ladies and gentlemen, thank you for participating in today's conference. This concludes the program. You may all disconnect, and have a wonderful day."
+    ],
+    "tones": [
+      {
+        "score": 0.644422, 
+        "tone_id": "joy", 
+        "tone_name": "Joy"
+      }, 
+      {
+        "score": 0.754395, 
+        "tone_id": "tentative", 
+        "tone_name": "Tentative"
+      }, 
+      {
+        "score": 0.70615, 
+        "tone_id": "analytical", 
+        "tone_name": "Analytical"
+      }
     ]
   }, 
   "status": 200

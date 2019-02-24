@@ -10,6 +10,7 @@ import requests
 import re
 import time
 from headers import *
+import watson
 
 def log(msg, tag="ALERT"):
     print("[" + tag + "] " + msg)
@@ -186,7 +187,10 @@ def scrapeCall(callPath, proxies):
             for p in answers: 
                 d[p]["answered"] += 1
 
-            return { "text": list(map(lambda tag: tag.text, paragraphs)), "stats": d, "participants": list(set(questions + answers))}
+            text = list(map(lambda tag: tag.text, paragraphs))
+            tones = watson.analyze(' '.join(text))            
+
+            return { "text": text, "stats": d, "participants": list(set(questions + answers)), "tones": tones }
             
             # execs = []
             # analysts = []

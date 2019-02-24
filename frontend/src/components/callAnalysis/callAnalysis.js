@@ -9,6 +9,10 @@ function Person(props) {
     return <div className={styles.person}>{props.name}</div>;
 }
 
+function Tone(props) {
+    return <div className={styles.tone}>{props.tone} <span className={props.score > 0.6 ? styles.green : styles.red}>{props.score}%</span></div>;
+}
+
 class CallAnalysis extends Component {
     constructor(props) {
         super(props)
@@ -31,7 +35,7 @@ class CallAnalysis extends Component {
             else this.setState({isValid: true, callAnalysisData: json.call, isLoaded: true})
             
         } catch(e) {
-            console.log('Error fetching company earnings calls!', e);
+            console.log('Error fetching earnings call analysis!', e);
         }
     }
 
@@ -40,8 +44,8 @@ class CallAnalysis extends Component {
     }
 
     componentDidMount() {
-        this.fetchCallAnalysis();
-        // this.useDummyData();
+        // this.fetchCallAnalysis();
+        this.useDummyData();
     }
 
     componentWillUnmount() {
@@ -65,7 +69,10 @@ class CallAnalysis extends Component {
             displayData =
              <div className={styles.wrapper}>
                 <Card split={<hr/>} title="Participants"><div className={styles.personContainer}>{data.participants.map(p => <Person key={p} name={p} />)}</div></Card>
-                <Card title="Call Analysis" ><br/>
+                <Card split={<hr/>} title="Tone Analysis">
+                    <div className={styles.tonesContainer}>{data.tones.map((t, i) => <Tone key={i} tone={t['tone_name']} score={t['score']} />)}</div>
+                </Card>
+                <Card title="Participation Analysis" ><br/>
                     <Table hover>
                         <thead>
                             <tr>

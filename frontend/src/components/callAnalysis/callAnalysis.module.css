@@ -39,3 +39,29 @@
 .person:hover {
     transform: scale(1.05);
 }
+
+.tonesContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.tone {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.19);
+    padding: 5px;
+    margin: 5px;
+    background: rgba(200, 200, 200, 0.1);
+}
+
+.tone:hover {
+    transform: scale(1.05);
+}
+
+.green {
+    color: var(--green) !important;
+}
+
+.red {
+    color: var(--danger) !important;
+}
