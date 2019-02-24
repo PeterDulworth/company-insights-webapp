@@ -5,6 +5,8 @@
 
 Explanation video: https://www.youtube.com/watch?v=MOjehyxotzU&feature=youtu.be
 
+![search gif](https://github.com/PeterDulworth/nesh-company-insights/blob/master/info/gifs/search.gif)
+
 ### Installation
 
 #### 1. Clone the repo
