@@ -29,7 +29,7 @@ For the website to be functional, you must also start the backend (next step).
 
 #### Back End
 ```bash
-python backend/app.py
+python backend/server.py
 ```
 The API will now be live at http://localhost:5000
 

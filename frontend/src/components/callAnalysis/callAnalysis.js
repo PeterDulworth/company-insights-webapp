@@ -63,7 +63,7 @@ class CallAnalysis extends Component {
                 </tr>
             );
             displayData =
-             <>
+             <div className={styles.wrapper}>
                 <Card split={<hr/>} title="Participants"><div className={styles.personContainer}>{data.participants.map(p => <Person name={p} />)}</div></Card>
                 <Card title="Call Analysis" ><br/>
                     <Table hover>
@@ -78,11 +78,11 @@ class CallAnalysis extends Component {
                     </Table>
                 </Card>
                 <Card split={<hr/>} title="Call Transcript"><div className={styles.alignLeft}>{data.text.map(p => <p>{p}</p>)}</div></Card>
-            </>
+            </div>
         } 
         // if the data is loaded and invalid
         else if (this.state.isLoaded && !this.state.isValid) {
-            displayData = <div className={styles.loadingWrapper}><h1>error loading call analysis...</h1></div>;
+            displayData = <div className={styles.loadingWrapper}><h1>error loading call analysis...</h1><p>this is usually caused by scraping seeking alpha too frequently. when they detect this they temporarily block the IP.</p></div>;
         } 
         // if the data is not yet loaded
         else {
@@ -90,10 +90,10 @@ class CallAnalysis extends Component {
         }
 
         return (
-            <div className={styles.wrapper}>
+            <>
                 <NavBar title={callTitle}/>
                 {displayData}
-            </div>
+            </>
         );
     }
 }
