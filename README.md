@@ -8,8 +8,10 @@ Explanation video: https://www.youtube.com/watch?v=MOjehyxotzU&feature=youtu.be
 
 ### Demo
 
+#### Search
 ![search gif](https://github.com/PeterDulworth/nesh-company-insights/blob/master/info/gifs/search.gif)
 
+#### Analysis
 ![analysis gif](https://github.com/PeterDulworth/nesh-company-insights/blob/master/info/gifs/analysis.gif)
 
 ### Features
