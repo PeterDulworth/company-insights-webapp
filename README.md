@@ -42,6 +42,9 @@ npm start
 ```
 The website will now be live at: http://localhost:3000/
 
+### Important Note
+<strong>If at anytime data fails to load, it is likely because your IP has been blocked by seeking alpha by their web scraping watch dog. To accomodate this I created an endpoing on the backend that will generate a proxy for the backend to use which in some cases will be able to get around the watch dog. To use a proxy simply open a new tab and navigate to http://localhost:5000/generate/proxy. You can visit this URL as many times as you would like and it will generate a new proxy each time. </strong>
+
 ### Features
 
 - stock overview

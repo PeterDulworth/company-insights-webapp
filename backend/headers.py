@@ -62,7 +62,7 @@ def getFreeProxies():
                 proxies.add(proxy)
 
     print ("Possible Proxies: ", proxies)
-    return proxies
+    return list(proxies)
 
 
 def getValidProxies():
@@ -72,6 +72,7 @@ def getValidProxies():
     if not proxies:
         return []
 
+    random.shuffle(proxies)
     proxy_pool = cycle(proxies)
     validProxies = set()
     atLeastOneValid = False
@@ -121,6 +122,7 @@ def getProxy():
         validProxy = random.choice(validProxies)
         print ("Chosen Proxy: ", validProxy)
         return { "http": validProxy }
+        # return { "http": validProxy, "https": validProxy }
 
     else:
         print ("NO PROXY FOUND")

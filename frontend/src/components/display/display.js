@@ -148,7 +148,7 @@ class Display extends Component {
             displayCalls = <>
                 <Card title="Earnings Calls" />
                 <div className={styles.callsWrapper}>
-                    {calls.map(c => (<Call key={c.name} name={c.name} link={c.link} path={c.path} date={c.date} symbol={this.props.symbol} />))}
+                    {calls.map((c, i) => (<Call key={i} name={c.name} link={c.link} path={c.path} date={c.date} symbol={this.props.symbol} />))}
                 </div></>;
         } 
         // if the data is loaded and invalid
