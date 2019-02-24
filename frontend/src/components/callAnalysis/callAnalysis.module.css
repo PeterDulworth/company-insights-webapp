@@ -3,7 +3,39 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
     width: 100vw;
     text-align: center;
+    padding-top:125px;
+}
+
+.loadingWrapper {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    height: 100vh;
+}
+
+.alignLeft {
+    text-align: left !important;
+}
+
+.personContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.person {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.19);
+    padding: 5px;
+    margin: 5px;
+    background: rgba(200, 200, 200, 0.1);
+}
+
+.person:hover {
+    transform: scale(1.05);
 }

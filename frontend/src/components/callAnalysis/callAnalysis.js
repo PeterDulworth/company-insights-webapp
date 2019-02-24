@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
-import { Redirect } from "react-router-dom";
 import NavBar from "../navbar/navbar"
 import Card from "../card/card"
 import styles from './callAnalysis.module.css';
+import Table from 'react-bootstrap/Table'
 import dummyAnalysisData from "../../dummyData/dummyCallAnalysisData"
+
+function Person(props) {
+    return <div className={styles.person}>{props.name}</div>;
+}
 
 class CallAnalysis extends Component {
     constructor(props) {
@@ -17,7 +21,7 @@ class CallAnalysis extends Component {
     }
 
     async fetchCallAnalysis() {
-        let url = 'http://localhost:5000/call/' + this.props.match.params.articleID; 
+        let url = 'http://localhost:5000/call/' + this.props.match.params.articleID; // the URL param
         try {
             const response = await fetch(url);
             const json = await response.json();
@@ -38,6 +42,7 @@ class CallAnalysis extends Component {
     componentDidMount() {
         // this.fetchCallAnalysis();
         this.useDummyData();
+        console.log(dummyAnalysisData);
     }
 
     componentWillUnmount() {
@@ -45,12 +50,50 @@ class CallAnalysis extends Component {
     }
 
     render() {
-        const callTitle = this.props.location.state.title;
-        const callPath = this.props.match.params.articleID;
+        const callTitle = this.props.location.state.title; // passed in using the "state" of the react router redirect
+        const data = this.state.callAnalysisData;
+
+        let displayData = null;
+        // if the data is loaded and valid
+        if (this.state.isLoaded && this.state.isValid) {
+            const rows = Object.keys(data.stats).map(k => 
+                <tr key={k}>
+                    <td><strong>{k}</strong></td>
+                    <td>{data.stats[k]['asked']}</td>
+                    <td>{data.stats[k]['answered']}</td>
+                </tr>
+            );
+            displayData =
+             <>
+                <Card split={<hr/>} title="Participants"><div className={styles.personContainer}>{data.participants.map(p => <Person name={p} />)}</div></Card>
+                <Card title="Call Analysis" ><br/>
+                    <Table hover>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Questions Asked</th>
+                                <th>Questions Answered</th>
+                            </tr>
+                        </thead>
+                        <tbody>{rows}</tbody>
+                    </Table>
+                </Card>
+                <Card split={<hr/>} title="Call Transcript"><div className={styles.alignLeft}>{data.text.map(p => <p>{p}</p>)}</div></Card>
+            </>
+        } 
+        // if the data is loaded and invalid
+        else if (this.state.isLoaded && !this.state.isValid) {
+            displayData = <div className={styles.loadingWrapper}><h1>error loading call analysis...</h1></div>;
+        } 
+        // if the data is not yet loaded
+        else {
+            displayData = <div className={styles.loadingWrapper}><h1>loading...</h1></div>
+        }
+
         return (
             <div className={styles.wrapper}>
-            <NavBar title={callTitle}/>
-            <Card split={<hr/>} title="Call Analysis" text={"hello world"} data={{"hi": "there"}}/>
+                <NavBar title={callTitle}/>
+                {displayData}
             </div>
         );
     }

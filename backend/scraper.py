@@ -189,7 +189,7 @@ def scrapeCall(callPath):
             for p in answers: 
                 d[p]["answered"] += 1
 
-            return { "text": list(map(lambda tag: tag.text, paragraphs)), "questions": questions, "answers": answers, "stats": d}
+            return { "text": list(map(lambda tag: tag.text, paragraphs)), "stats": d, "participants": list(set(questions + answers))}
             
             # execs = []
             # analysts = []
