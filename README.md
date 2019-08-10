@@ -1,6 +1,8 @@
 # Company Insight Utility
 #### Built by Peter Dulworth for Nesh
 
+A webapp built in flask and react that lets users view financial information about companies. all information is obtained via web scrapers.
+
 ### Submission Video
 
 Explanation video: https://www.youtube.com/watch?v=MOjehyxotzU&feature=youtu.be
