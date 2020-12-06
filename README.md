@@ -44,7 +44,6 @@ npm install
 ```
 #### 3. Install backend dependencies
 it is recommended that you use a virtual environment but not required. To setup a virtual environment run (from the project root):
-GPG test
 ```bash
 python3 -m venv env
 ```
