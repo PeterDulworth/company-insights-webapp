@@ -53,6 +53,7 @@ source env/bin/activate
 ```
 If you want to deactivate the environment later simply run `deactivate`.
 
+Next, install all dependencies by running:
 ```bash
 pip install -r requirements.txt
 ```
