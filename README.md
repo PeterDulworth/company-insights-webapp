@@ -43,7 +43,7 @@ cd frontend
 npm install
 ```
 #### 3. Install backend dependencies
-it is recommended that you use a virtual environment but not required. To setup a virtual environment run:
+it is recommended that you use a virtual environment but not required. To setup a virtual environment run (from the project root):
 ```bash
 python3 -m venv env
 ```
@@ -67,8 +67,7 @@ First start the backend, then start the front end:
 
 #### 1. Back End
 ```bash
-cd backend
-python server.py
+python backend/server.py
 ```
 The API will now be live at http://localhost:5000
 
