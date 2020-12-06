@@ -43,7 +43,16 @@ cd frontend
 npm install
 ```
 #### 3. Install backend dependencies
-it is recommended that you use a virtual environment but not required.
+it is recommended that you use a virtual environment but not required. To setup a virtual environment run:
+```bash
+python3 -m venv env
+```
+This will create a new virtal environment in the folder 'env'. To activate the virtual environment run:
+```bash
+source env/bin/activate
+```
+If you want to deactivate the environment later simply run `deactivate`.
+
 ```bash
 pip install -r requirements.txt
 ```
