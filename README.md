@@ -67,7 +67,7 @@ First start the backend, then start the front end:
 
 #### 1. Back End
 ```bash
-python backend/server.py
+python3 backend/server.py
 ```
 The API will now be live at http://localhost:5000
 
