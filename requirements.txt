@@ -12,7 +12,7 @@ python-dateutil==2.8.1
 requests==2.21.0
 six==1.15.0
 soupsieve==1.8
-urllib3==1.24.2
+urllib3==1.26.5
 watson-developer-cloud==2.10.1
 websocket-client==0.48.0
 Werkzeug==0.14.1
